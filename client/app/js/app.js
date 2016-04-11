@@ -5,13 +5,12 @@ app.config(['$httpProvider', function ($httpProvider) {
     }]).run(function($rootScope, $location, $state, AuthenticationService) {
 
 		$rootScope.$on('$stateChangeStart',
-		        function(event, toState, toParams, fromState, fromParams){
-		            if(toState.name !== 'app.login' &&  !AuthenticationService.isLogged) {
-		            event.preventDefault();
-		            $state.go('app.login');
-		        }
-		});
-
+	        function(event, toState, toParams, fromState, fromParams){
+	            if(toState.name !== 'app.login' &&  !AuthenticationService.isLogged) {
+	            event.preventDefault();
+	            $state.go('app.login');
+	        }
 	});
+});
 
 
