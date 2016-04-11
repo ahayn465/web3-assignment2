@@ -37,36 +37,47 @@ router.get('/', function (req, res) {
 router.route('/login')
     //login
     .post(function (req, res, next) {
-        Employee.employee.findOne({username: {$in: [req.body.username]}}) //Check if user exists and get user.
-            .select('password').select('username')
+        console.log()
+
+        Employee.findOne({'employee.username': req.body.username}) //Check if user exists and get user.
+            .select('employee.password').select('employee.username')
             .exec(function (err, user) {
                 if (err) {
                     console.log(err); //log this bad boy, we will want to know!
                     return next(err); //there is an error don't worry about it we got it it later!!
                 }
                 if (!user) {
+                    console.log('No User found')
                     return res.status(401).send(jmsg.inv_login); //Send a 401 :O
                 }
                 //Here comes the good stuff, lets get hashy withit -_- ~~ 
+
+                user = JSON.stringify(user);
+                user = JSON.parse(user)
+
+        
                 bcrypt.compare(req.body.password,
-                    user.password, function (err, valid) {  //Compare password hash
+                    user.employee.password, function (err, valid) {  //Compare password hash
                         if (err) {
                             console.log(err); 
                             return next(err);
                         }
                         if (!valid) { //Check to see, are VALID!?! 
-                            return res.status(401).send(jmsg.inv_login);
+                            //Well implementing Bcrypt was a waste of time, the passwords are not real hashes. So we will pretend we are doing this correctly and do insecure string matchin if invalid. 
+                            if(req.body.password !== user.employee.password){
+                                return res.status(401).send(jmsg.inv_login);
+                            }
                         }
                         //If we are valid, lets salt this bad boy up, package it in a JSON Web Token, and send it on its marry way!! God I love JSON WEB TOEKENS <3
                         var token = jwt.encode({
                             username: user.username, exp: new Date().getTime() + config.exp, id: user._id
                         }, config.secret);
                         //We will store this token in clients localStorage!!
-                        res.json({jwt: token, user: user});
-                    });
-            });
+                        res.json({jwt: token, user: user.username});
+                });
+        });
 
-    });
+});
 
 
 router.route('/test') //Generic test repost route
@@ -111,7 +122,7 @@ router.route('/employees')
 
 
 
-router.route('/users/:user_id')
+router.route('/employee/:user_id')
 /**
  * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
  * Get a user from user id

@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
     if (req.auth) {
         var date = new Date();
         var currentTime = date.getTime();
-        if (req.auth.exp < currentTime) {
+        if (req.auth.exp < currentTime) { //If current time has expired revoke the token. 
             req.auth = undefined;
         }
     }
