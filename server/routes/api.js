@@ -3,6 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
 var jwt = require('jwt-simple');
+var jmsg = require('./status-responses');
 var config = require('../config/jwtconfig');
 var Employee = require('../models/employee');
 
@@ -15,6 +16,9 @@ app.use(require('../middleware/jwt-expire'));     //Set JWT-Token Expiration mid
 app.use(require('../middleware/cors'));           //Set CORS middleware
 
 var router = express.Router();
+
+
+console.log(jmsg.welcome);
 
 //test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function (req, res) {

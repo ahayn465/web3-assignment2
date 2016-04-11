@@ -6,7 +6,7 @@ angular.module('auth.services', ['ngResource'])
         return auth;
     })
     .factory('UserLoginService', function ($http) {
-        var serverUrl = "http://localhost:8000";
+        var serverUrl = "http://localhost:7000";
         return {
             logIn: function (username, password) {
                 alert(123);
