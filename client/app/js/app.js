@@ -16,7 +16,11 @@ app.config(['$httpProvider', function ($httpProvider) {
 	        	if(toState.name === 'app.login'){
 	        		delete localStorage.token;
 	        		UserService.setUser({});
-	        		AuthenticationService.isLogged = false;
+	        		if (AuthenticationService.isLogged){
+	        			AuthenticationService.isLogged = false;
+	        			AuthenticationService.lastEvent = "Refreshing single page applications is not needed, as result we revoke your session as punishment!!";
+	        		}
+	        		
 	        	}
 	        }
 	});

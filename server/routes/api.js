@@ -18,7 +18,8 @@ app.use(require('../middleware/cors'));           //Set CORS middleware
 var router = express.Router();
 
 
-console.log(jmsg.welcome);
+//ERROR CODE BEING USED ARE 200, 401, 404, 422. Use cases below.
+
 
 //test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function (req, res) {
@@ -37,8 +38,6 @@ router.get('/', function (req, res) {
 router.route('/login')
     //login
     .post(function (req, res, next) {
-        console.log()
-
         Employee.findOne({'employee.username': req.body.username}) //Check if user exists and get user.
             .select('employee.password').select('employee.username')
             .exec(function (err, user) {
@@ -88,13 +87,14 @@ router.route('/test') //Generic test repost route
 });
 
 
-router.route('/employees')
+router.route('/employee')
 /**
 * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 * Get current authenticated login user information.
 * Decode JWT information to retrieve id to query for user info
 */
     .post(function (req, res, next) {
+        console.log(123);
         if (!req.auth) {
             return res.status(401).send();
         }
@@ -133,13 +133,89 @@ router.route('/employee/:user_id')
         if (!req.auth) {
             return res.status(404).send();
         }
-        Employee.employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
+        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
             if (err) {
                 return next(err);
             }
             res.json(user);
         });
 });
+
+router.route('/todo')
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Get entire todo list based on login user
+ */
+    .get(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send();
+        }
+        Employee.findOne({'_id': req.auth.id}) //Check if user exists and get user.
+            .select('employee.todo').exec(function (err, todo) {
+                res.json(todo);
+        })
+    })
+    .post(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send();
+        }
+        
+
+
+        Employee.findOne({_id:req.auth.id}).exec(function(user){
+                user.employee.todo.push(req.body.payload)
+                user.save()
+    }
+)
+});
+
+
+
+
+
+
+router.route('/todo/todo_id')
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Get entire todo list based on login user
+ */
+    .get(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send();
+        }
+        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
+            if (err) {
+                return next(err);
+            }
+            res.json(user);
+        })
+    .update(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send();
+        }
+        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
+            if (err) {
+                return next(err);
+            }
+            res.json(user);
+        });
+})    .delete(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send();
+        }
+        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
+            if (err) {
+                return next(err);
+            }
+            res.json(user);
+        });
+})
+});
+
+
+
+
+
 
 
 

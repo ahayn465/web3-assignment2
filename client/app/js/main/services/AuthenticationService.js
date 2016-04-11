@@ -1,6 +1,7 @@
 angular.module('auth.services', ['ngResource'])
     .factory('AuthenticationService', function () {
         var auth = {
+            lastEvent: null,
             isLogged: false
         }
         return auth;
@@ -32,17 +33,18 @@ angular.module('auth.services', ['ngResource'])
 
             /* Set Authentication.isAuthenticated to true if 200 received */
             response: function (response) {
-                if (response != null && response.status == 200 && localStorage.token && !AuthenticationService.isAuthenticated) {
-                    AuthenticationService.isAuthenticated = true;
+                if (response != null && response.status == 200 && localStorage.token && !AuthenticationService.isLogged) {
+                    AuthenticationService.isLogged = true;
                 }
                 return response || $q.when(response);
             },
 
             /* Revoke client authentication if 401 is received */
             responseError: function (rejection) {
-                if (rejection != null && rejection.status === 400 && (localStorage.token || AuthenticationService.isAuthenticated)) {
+                if (rejection != null && rejection.status === 400 && (localStorage.token || AuthenticationService.isLogged)) {
                     delete localStorage.token;
-                    AuthenticationService.isAuthenticated = false;
+                    AuthenticationService.isLogged = false;
+                    AuthenticationService.lastEvent = "Session Token Revoked";
                     $location.path("/");
                 }
 
