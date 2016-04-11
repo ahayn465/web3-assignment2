@@ -3,18 +3,16 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
 var jwt = require('jwt-simple');
-var config = require('../config');
-var Employee = require('../models/employee.js');
+var config = require('../config/jwtconfig');
+var Employee = require('../models/employee');
 
 var app = exp();
 
 app.use(bodyParser.json()); //populates req.body with (among other things) the value of the POST parameters. Here's the doc and examples: http://expressjs.com/api.html#req.body
 
-app.use(require('./middleware/jwt-inspectos'));  //Set JWT middleware
-app.use(require('./middleware/jwt-expire'));     //Set JWT-Token Expiration middleware
-app.use(require('./middleware/cors'));           //Set CORS middleware
-
-var router = express.Router();
+app.use(require('../middleware/jwt-inspectos'));  //Set JWT middleware
+app.use(require('../middleware/jwt-expire'));     //Set JWT-Token Expiration middleware
+app.use(require('../middleware/cors'));           //Set CORS middleware
 
 var router = express.Router();
 
@@ -52,7 +50,7 @@ router.route('/login')
                             console.log(err); 
                             return next(err);
                         }
-                        if (!valid) { //Check to see, are VALID!! 
+                        if (!valid) { //Check to see, are VALID!?! 
                             return res.status(401).send(jmsg.inv_login);
                         }
                         //If we are valid, lets salt this bad boy up, package it in a JSON Web Token, and send it on its marry way!! God I love JSON WEB TOEKENS <3
