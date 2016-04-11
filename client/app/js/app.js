@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'auth.services']);
+var app = angular.module('app', ['ui.router', 'auth.services', 'data.services']);
 
 app.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
