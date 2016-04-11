@@ -1,12 +1,12 @@
 angular.module('data.services', ['ngResource'])
-    .factory('UserDataService', function () {
-    	var user = {}
+    .factory('UserService', function () {
+    	u = {}
         return {
         	setUser: function(user){
-        		user = user;
+        		u = user;
         	},
         	getUser: function(){
-        		return user;
+        		return u;
         	} 
         };
  });

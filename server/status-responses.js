@@ -5,8 +5,8 @@ module.exports = {
     inv_login:   {message: 'Incorrect user name or password'},
     user_ex:     {message: 'Username already exists'},
     email_ex:    {message: 'Email already exists'},
-    create:      {message: 'Post created!'},
-    update:      {message: 'Post updated!'},
+    create:      {message: 'uccessfully created!'},
+    update:      {message: 'uccessfully updated!'},
     del:         {message: 'Successfully deleted'},
     toke_unauth: {message: 'Unauthorized'},
     sess_exp:    {message: 'Session Expired'}

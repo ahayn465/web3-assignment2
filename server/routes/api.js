@@ -25,7 +25,7 @@ router.get('/', function (req, res) {
     res.json(jmsg.welcome);
 });
 
-//IMPORTANT AS FUCK INFO: I SET UP THE CLIENT SO WE CAN CONTROL THERE ACCESS TO THE APP VIA THE SERVER, IF YOU SEND A 401 
+//IMPORTANT AS FUCK INFO: I SET UP THE CLIENT SO WE CAN CONTROL USER ACCESS TO THE APP VIA THE SERVER, IF YOU SEND A 401 
 //YOU WILL REVOKE THE TOKEN IN THE CLIENT!!
 
 /**
@@ -63,17 +63,18 @@ router.route('/login')
                             return next(err);
                         }
                         if (!valid) { //Check to see, are VALID!?! 
-                            //Well implementing Bcrypt was a waste of time, the passwords are not real hashes. So we will pretend we are doing this correctly and do insecure string matchin if invalid. 
+                            
+                            //Well implementing Bcrypt was a waste of time, the passwords are not real hashes. So we will pretend we are doing this correctly and do insecure string matching if invalid. 
                             if(req.body.password !== user.employee.password){
                                 return res.status(401).send(jmsg.inv_login);
                             }
                         }
-                        //If we are valid, lets salt this bad boy up, package it in a JSON Web Token, and send it on its marry way!! God I love JSON WEB TOEKENS <3
+                        //If we are valid, lets salt this bad boy up, hash it as a JSON Web Token, and send it on its marry way!! God I love JSON WEB TOEKENS <3
                         var token = jwt.encode({
                             username: user.username, exp: new Date().getTime() + config.exp, id: user._id
                         }, config.secret);
                         //We will store this token in clients localStorage!!
-                        res.json({jwt: token, user: user.username});
+                        res.json({jwt: token, user: user.employee.username, id:user._id});
                 });
         });
 
@@ -90,14 +91,14 @@ router.route('/test') //Generic test repost route
 router.route('/employees')
 /**
 * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-* Get current login user information, as well as the friends associated with that account.
-* Query users collections with <req.auth.id>
+* Get current authenticated login user information.
+* Decode JWT information to retrieve id to query for user info
 */
     .post(function (req, res, next) {
         if (!req.auth) {
             return res.status(401).send();
         }
-        Employee.employee.findOne({_id: {$in: [req.auth.id]}}).exec(function (err, user) {
+        Employee.findOne({_id: {$in: [req.auth.id]}}).exec(function (err, user) {
             if (err) {
                 return next(err);
             }
@@ -113,7 +114,7 @@ router.route('/employees')
         if (!req.auth) {
             return res.status(404).send();
         }
-        Employee.employee.find(function (err, users) {
+        Employee.find(function (err, users) {
             if (err)
                 res.send(err);
             res.json(users);
@@ -142,57 +143,6 @@ router.route('/employee/:user_id')
 
 
 
-
-
-
-
-// //Retrieve books by employee ID
-// app.get('/books/:id', function(req, resp) {
-//     Employee.find({ id: req.params.id }, 'books', function(err, data) {
-//         if (err) { console.log('Error finding books.');
-//             resp.json({ message: 'Unable to find books.'});
-//         }
-//         else {resp.json(data);}
-// 	});
-// });
-
-// //Retrieve to do list by employee ID
-// app.get('/todo/:id', function(req, resp) {
-//     Employee.find({ id: req.params.id }, 'todo', function(err, data) {
-//         if (err) { console.log('Error finding to do list.');
-//             resp.json({ message: 'Unable to find to do list.'});
-//         }
-//         else {resp.json(data);}
-// 	});
-// });
-
-// //Create to do item by employee ID
-// app.post('/todo/:id', function(req, resp) {
-// });
-
-// //Update to do item by employee ID
-// app.put('/todo/:id', function(req, resp) {
-// });
-
-// //Delete to do item by employee ID
-// app.delete('/todo/:id', function(req, resp) {
-// 	Employee.find({ id: req.params.id }, function(err, data) {
-// 		if (err) { console.log('Error deleting the to do item.');
-// 			resp.json({ message: 'Unable to delete to do item.'});
-// 		}
-// 		else { resp.json({ message: 'Item successfully deleted.' }); }
-//   });
-// });
-
-// //Retrieve messages by employee ID
-// app.get('/messages/:id', function(req, resp) {
-//     Employee.find({ id: req.params.id }, 'messages', function(err, data) {
-//         if (err) { console.log('Error finding messages.');
-//             resp.json({ message: 'Unable to find messages.'});
-//         }
-//         else {resp.json(data);}
-// 	});
-// });
 
 
 // REGISTER OUR ROUTES -------------------------------
