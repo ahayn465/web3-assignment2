@@ -10,22 +10,26 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     .state('app.home', {
       url: '/home',
       templateUrl: 'js/main/templates/dash.tpl.html',
-      controller: 'DashCtrl'
+      controller: 'DashCtrl',
+      access: {requiredLogin: true}
     })
     .state('app.book', {
       url: '/books',
       templateUrl: 'js/main/templates/book.tpl.html',
-      controller: 'BookCtrl'
+      controller: 'BookCtrl',
+      access: {requiredLogin: true}
     })
     .state('app.msg', {
       url: '/messages',
       templateUrl: 'js/main/templates/msg.tpl.html',
-      controller: 'MsgCtrl'
+      controller: 'MsgCtrl',
+      access: {requiredLogin: true}
     })    
     .state('app.todo', {
       url: '/todo',
       templateUrl: 'js/main/templates/todo.tpl.html',
-      controller: 'ToDoCtrl'
+      controller: 'ToDoCtrl',
+      access: {requiredLogin: true}
     });
 
     // if none of the above states are matched, use this as the fallback

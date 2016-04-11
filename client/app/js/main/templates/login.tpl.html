@@ -1,1 +1,7 @@
-<p>This is login</p>
+<div ng-show="AuthenticationService.isLogged">
+    	<h1>Welcome to the supercalifragilisticexpialidocious Random App Appionizer!!</h1>
+</div>
+
+<div ng-hide="AuthenticationService.isLogged">
+    	<h1>Hmm something isn't right, you shouldn't be here. Go <a href="/#/home">home</a> now!</h1>
+</div>
