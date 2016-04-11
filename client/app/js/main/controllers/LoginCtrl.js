@@ -1,10 +1,9 @@
-app.controller('LoginCtrl', ['$scope', function($scope) {
-
+app.controller('LoginCtrl', ['$scope', 'UserLoginService', 'AuthenticationService', function($scope, UserLoginService, AuthenticationService) {
+    $scope.loginData = {}
     $scope.doLogin = function (username, password) { //Login a user on click
                 if (username !== undefined && password !== undefined) {
                     UserLoginService.logIn(username, password)
-                        .success(function (data) { 
-                            //if valid set user id, username, and json web token to localStorage
+                        .success(function (data) { //if valid set user id, username, and json web token to localStorage
                             AuthenticationService.isLogged = true;
                             localStorage.username = data.username;//Then welcome the user
                             localStorage.userid = data.id;
