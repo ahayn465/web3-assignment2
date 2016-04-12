@@ -3,7 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
 var jwt = require('jwt-simple');
-var jmsg = require('./status-responses');
+var jmsg = require('../status-responses');
 var config = require('../config/jwtconfig');
 var Employee = require('../models/employee');
 var app = exp();
@@ -88,12 +88,13 @@ router.route('/login')
                         }
                         if (!valid) { //Check to see, are VALID!?! 
                             
-                            //Well implementing Bcrypt was a waste of time, the passwords are not real hashes. So we will pretend we are doing this correctly and do insecure string matching if invalid. 
+                            //Well implementing Bcrypt was a waste of time, the passwords are not real hashes. So we will pretend this is a real app and we are doing this correctly, lets do basic insecure string matching.
                             if(req.body.password !== user.password){
                                 return res.status(401).send(jmsg.inv_login);
                             }
                         }
-                        //If we are valid, lets salt this bad boy up, hash it as a JSON Web Token, and send it on its marry way!! God I love JSON WEB TOEKENS <3
+                        //If we are valid, lets salt this bad boy up, hash it as a JSON Web Token, and send it on its marry way!! God I love JSON WEB TOEKENS, here is some resources
+                        //https://scotch.io/tutorials/the-anatomy-of-a-json-web-token
                         var token = jwt.encode({
                             username: user.username, exp: new Date().getTime() + config.exp, id: user._id
                         }, config.secret);
@@ -158,7 +159,7 @@ router.route('/employee/:user_id')
         if (!req.auth) {
             return res.status(404).send();
         }
-        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
+        Employee.findOne({id: req.params.user_id}}, function (err, user) {
             if (err) {
                 return next(err);
             }
@@ -189,8 +190,12 @@ router.route('/todo')
             { "$push": { "todo": req.body.payload } },
             { "new": true },
             function(err,doc) {
-                console.log( JSON.stringify(doc) ); // shows the modified document
-
+                if(err){
+                    console.log( JSON.stringify(doc));
+                }else{
+                    res.json(jmsg.created)
+                }
+                
         });
 });
 
