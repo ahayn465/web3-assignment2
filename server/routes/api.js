@@ -21,7 +21,7 @@ var router = express.Router()
 
 //ERROR CODE BEING USED ARE 200, 401, 404, 422. Use cases below.
 
-/* RUN THIS IF THIS IS YOUR FIRST TIME USING THE APPLICATION */
+
 function seedDB(){
     for(var field in don){
         employee = new Employee()
@@ -41,9 +41,12 @@ function seedDB(){
         for (var i = 0 ; i < don[field].books.length; i++){
             employee.books.push(don[field].books[i])
         }
-        employee.save()
+        console.log(employee.save())
     }
 }
+/* RUN THIS IF THIS IS YOUR FIRST TIME USING THE APPLICATION */
+//seedDB() //Uncomment this libne if its your first time running the aplications. Be sure to drop the employee table
+
 
 
 //test route to make sure everything is working (accessed at GET http://localhost:8080/api)
