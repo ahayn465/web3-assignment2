@@ -36,6 +36,9 @@ angular.module('data.services', ['ngResource'])
             return {
                 getBookList: function(){
                     return $http.get(SERVER_URL + '/api/book');
+                },
+                getSingleBook: function(id){
+                    return $http.get(SERVER_URL + '/api/book/' + id)
                 }
             }
         

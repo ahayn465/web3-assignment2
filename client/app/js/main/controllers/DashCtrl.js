@@ -1,4 +1,4 @@
-app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', function($scope, AuthenticationService, UserService, EmployeeService, TodoService) {
+app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService) {
 
 	$scope.uname = UserService.getUser().user;
 
@@ -32,7 +32,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 
 
 	// EmployeeService.getCurrentAuthenticatedEmployee()
-	//.success(function(data){
+	// .success(function(data){
 	// 	console.log(data);
 	// }).error(function(data){
 	// 	console.log(data);
@@ -47,7 +47,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// });
 
 	// EmployeeService.getAllEmployees()
-	//.success(function(data){
+	// .success(function(data){
 	// 	console.log(data);
 	// }).error(function(data){
 	// 	console.log(data);
@@ -78,12 +78,12 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data);
 	// });
 
-	TodoService.getSingleTodoEntry(1)
-	.success(function(data){
-		console.log(data)
-	}).error(function(data){
-		console.log(data)
-	})
+	// TodoService.getSingleTodoEntry(1)
+	// .success(function(data){
+	// 	console.log(data)
+	// }).error(function(data){
+	// 	console.log(data)
+	// })
 
 	// TodoService.deleteTodoEntry(1)
 	// .success(function(data){
@@ -92,6 +92,21 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data)
 	// })
 
+	//Books
+
+	// BookService.getBookList()
+	// .success(function(data){
+	// 	console.log(data)
+	// }).error(function(data){
+	// 	console.log(data)
+	// })
+
+	BookService.getSingleBook(571)
+	.success(function(data){
+		console.log(data)
+	}).error(function(data){
+		console.log(data)
+	})
 
 
 

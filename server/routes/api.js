@@ -177,7 +177,7 @@ router.route('/todo')
             return res.status(404).send()
         }
         Employee.findOne({'_id': req.auth.id}) //Check if user exists and get user.
-            .select('employee.todo').exec(function (err, todo) {
+            .select('todo').exec(function (err, todo) {
                 res.json(todo)
         })
     })
@@ -194,17 +194,60 @@ router.route('/todo')
                     console.log( JSON.stringify(doc))
                 }else{
                     res.json(jmsg.created)
-                }
-                
+            } 
         })
 })
 
 
   
 
+router.route('/book')
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Get entire book list based on login user
+ */    
+    .get(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send()
+        }
+        Employee.findOne({'_id': req.auth.id}) //Check if user exists and get user.
+            .select('books').exec(function (err, books) {
+                res.json(books)
+        })
+    })
 
+router.route('/book/:id')
+    .get(function (req, res) {
+        if (!req.auth) {
+            return res.status(401).send()
+        }
+        Employee.findOne({_id: req.auth.id}).select('books').exec( function (err, user) {
+            if (err) {
+                console.log(err)
+            }
+            bookItem = {}
+            found = false
+            for (var i = 0; i < user.books.length; i++){
 
+                if(user.books[i]){
+                    console.log(user.books[i].id)
+                    if(parseInt(user.books[i].id) === parseInt(req.params.id)){
+                        bookItem = user.books[i]
+                        found = true
+                        break
+                    }
+                }
 
+            }  
+            if (found){
+                res.json(bookItem)       
+            }else{
+                return res.status(422).send()
+            }
+            
+            
+        })
+    })
 
 router.route('/todo/:id')
 /**
@@ -233,7 +276,7 @@ router.route('/todo/:id')
 
             }  
             if (found){
-                return res.json(todoItem)       
+                res.json(todoItem)       
             }else{
                 return res.status(422).send()
             }
@@ -278,14 +321,14 @@ router.route('/todo/:id')
                 if (err){
                     console.log(err)
                 }
-
+                found = false
                 for (var i = 0;i < user.todo.length; i++){
 
 
                         if(parseInt(user.todo[i].id) === parseInt(req.params.id)){
                             var index = i
                             if (index > -1) {
-                                console.log(123)
+                                found = true
                                 user.todo.splice(index, 1);
                             }
                         }
@@ -294,7 +337,12 @@ router.route('/todo/:id')
                     if (err){
                         console.log(err)
                     }else{
-                        res.json(jmsg.del)
+                        if (found){
+                            res.json(jmsg.del)
+                        }else{
+                            res.status(422).send()
+                        }
+                        
                     }
                 })
             })
