@@ -55,14 +55,14 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 
 	//To Do Exmaples below
 
-	// TodoService.getTodoList()
-	//.success(function(data){
-	// 	console.log(data);
-	// }).error(function(data){
-	// 	console.log(data);
-	// })
+	TodoService.getTodoList()
+	.success(function(data){
+		console.log(data);
+	}).error(function(data){
+		console.log(data);
+	})
 
-	var new_todo = {"id": 33,"status": "test","priority": "321","date": "01/01/01", "description" : "Aliquam sit amet diam in magna bibendum imperdiet."};
+	var new_todo = {"id": 6,"status": "test","priority": "321","date": "8/28/2015", "description" : "RYLAN"};
 	TodoService.createNewTodoEntry(new_todo)
 	.success(function(data){
 		console.log(data);

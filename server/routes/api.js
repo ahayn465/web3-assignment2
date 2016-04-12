@@ -6,8 +6,9 @@ var jwt = require('jwt-simple');
 var jmsg = require('./status-responses');
 var config = require('../config/jwtconfig');
 var Employee = require('../models/employee');
-
 var app = exp();
+var don = require('../models/employees.json')
+
 
 app.use(bodyParser.json()); //populates req.body with (among other things) the value of the POST parameters. Here's the doc and examples: http://expressjs.com/api.html#req.body
 
@@ -19,6 +20,30 @@ var router = express.Router();
 
 
 //ERROR CODE BEING USED ARE 200, 401, 404, 422. Use cases below.
+
+/* RUN THIS IF THIS IS YOUR FIRST TIME USING THE APPLICATION */
+function seedDB(){
+    for(var field in don){
+        employee = new Employee()
+        employee.id = don[field].id
+        employee.guid = don[field].guid
+        employee.firstname = don[field].firstname
+        employee.lastname = don[field].lastname
+        employee.username = don[field].username
+        employee.password = don[field].password
+
+        for (var i = 0; i < don[field].todo.length;i++){
+            employee.todo.push(don[field].todo[i]);
+        }
+        for (var i = 0; i < don[field].messages.length;i++){
+            employee.messages.push(don[field].messages[i]);
+        }
+        for (var i = 0; i < don[field].books.length;i++){
+            employee.books.push(don[field].books[i]);
+        }
+        employee.save()
+    }
+}
 
 
 //test route to make sure everything is working (accessed at GET http://localhost:8080/api)
@@ -38,8 +63,8 @@ router.get('/', function (req, res) {
 router.route('/login')
     //login
     .post(function (req, res, next) {
-        Employee.findOne({'employee.username': req.body.username}) //Check if user exists and get user.
-            .select('employee.password').select('employee.username')
+        Employee.findOne({'username': req.body.username}) //Check if user exists and get user.
+            .select('password').select('username')
             .exec(function (err, user) {
                 if (err) {
                     console.log(err); //log this bad boy, we will want to know!
@@ -49,14 +74,14 @@ router.route('/login')
                     console.log('No User found')
                     return res.status(401).send(jmsg.inv_login); //Send a 401 :O
                 }
-                //Here comes the good stuff, lets get hashy withit -_- ~~ 
+                //Here comes the good stuff, lets get hashy withit -_- ~~~ ~~ ~
 
                 user = JSON.stringify(user);
                 user = JSON.parse(user)
 
         
                 bcrypt.compare(req.body.password,
-                    user.employee.password, function (err, valid) {  //Compare password hash
+                    user.password, function (err, valid) {  //Compare password hash
                         if (err) {
                             console.log(err); 
                             return next(err);
@@ -64,7 +89,7 @@ router.route('/login')
                         if (!valid) { //Check to see, are VALID!?! 
                             
                             //Well implementing Bcrypt was a waste of time, the passwords are not real hashes. So we will pretend we are doing this correctly and do insecure string matching if invalid. 
-                            if(req.body.password !== user.employee.password){
+                            if(req.body.password !== user.password){
                                 return res.status(401).send(jmsg.inv_login);
                             }
                         }
@@ -73,7 +98,7 @@ router.route('/login')
                             username: user.username, exp: new Date().getTime() + config.exp, id: user._id
                         }, config.secret);
                         //We will store this token in clients localStorage!!
-                        res.json({jwt: token, user: user.employee.username, id:user._id});
+                        res.json({jwt: token, user: user.username, id:user._id});
                 });
         });
 
@@ -159,16 +184,18 @@ router.route('/todo')
         if (!req.auth) {
             return res.status(404).send();
         }
-        
+        Employee.findOneAndUpdate(
+            { "_id": req.auth.id },
+            { "$push": { "todo": req.body.payload } },
+            { "new": true },
+            function(err,doc) {
+                console.log( JSON.stringify(doc) ); // shows the modified document
 
-
-        Employee.findOne({_id:req.auth.id}).exec(function(user){
-                user.employee.todo.push(req.body.payload)
-                user.save()
-    }
-)
+        });
 });
 
+
+  
 
 
 
