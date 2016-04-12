@@ -2,7 +2,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 
 	$scope.uname = UserService.getUser().user;
 
-	//Hey hey Amanda, I hope you have a good day today <3, im sorry for yesterday. I really wish I got to teach you this in person, nothing I love more, anyhow - Quicknote and reminder about these services, they return promises, and promises are singletons!!  This means they have some weird behavior you would not expect from JS !
+	//Hey hey Amanda, I hope you have a good day today. I really wish I got to teach you this in person, nothing I love more, anyhow - Quicknote and reminder about these services, they return promises, and promises are singletons!!  This means they have some weird behavior you would not expect from JS !
 	//You will notice there is a success method appended to the result of these services, this is called a singleton.
 	//The results and contents of what is in 'data', will ONLY be avalibale within the callback it self! For example:
 	//Lets say I call getEmployeeByID and I wanted to set its result to a variable named 'loggedUser' which we want to render out in the html file, it would look something like this!
