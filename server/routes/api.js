@@ -19,8 +19,8 @@ app.use(require('../middleware/cors'))           //Set CORS middleware
 var router = express.Router()
 
 
-//ERROR CODE BEING USED ARE 200, 401, 404, 422. Use cases below.
-
+//ERROR CODE BEING USED ARE 200, 401, 422. Use cases below.
+//TODO: document errors codes
 
 function seedDB(){
     for(var field in don){
@@ -45,7 +45,7 @@ function seedDB(){
     }
 }
 /* RUN THIS IF THIS IS YOUR FIRST TIME USING THE APPLICATION */
-//seedDB() //Uncomment this libne if its your first time running the aplications. Be sure to drop the employee table
+//seedDB() //Uncomment this line if its your first time running the aplications. Be sure to drop the employee table
 
 
 

@@ -11,7 +11,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// var user_id = 'an ID'
 	// EmployeeService.getEmployeeByID(user_id)
 	//.success(function(data){
-	// 	$scope.loggedUser = data.username; //Using two way binding, this would update in realtime in the html regaurless of being in the promise!!
+	// 	$scope.loggedUser = data.username; //Using two way binding, this would update the html regaurless of being in the promise!! you render out the $scope variable in the mark up as follows. <div>{{loggedUser}}</div>
 	// }).error(function(data){
 	// 	console.log(data);
 	// });
