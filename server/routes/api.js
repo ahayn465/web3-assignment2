@@ -181,6 +181,10 @@ router.route('/todo')
                 res.json(todo)
         })
     })
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Create new todo list entry
+ */
     .post(function (req, res) {
         if (!req.auth) {
             return res.status(404).send()
@@ -217,6 +221,10 @@ router.route('/book')
     })
 
 router.route('/book/:id')
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Get single book from params
+ */
     .get(function (req, res) {
         if (!req.auth) {
             return res.status(401).send()
@@ -282,6 +290,10 @@ router.route('/todo/:id')
             
             
         })
+ /**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Update a todo entry
+ */
     })  .put(function (req, res) {
             if (!req.auth) {
                 return res.status(401).send()
@@ -314,6 +326,10 @@ router.route('/todo/:id')
                     }
                 })
             })
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Remove todo entry from list based on params
+ */
     })  .delete(function (req, res) {
             Employee.findOne({_id: req.auth.id}).select('todo').exec( function (err, user){
 
@@ -363,6 +379,10 @@ router.route('/messages')
                 res.json(msg)
         })
     })
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Create new todo list entry
+ */
     .post(function (req, res) {
         if (!req.auth) {
             return res.status(404).send()
@@ -385,7 +405,7 @@ router.route('/messages')
 router.route('/messages/:id')
 /**
  * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
- * Get entire todo list based on login user
+ * Get entire list of messages based on params, NOT DOCUMENT ID
  */
     .get(function (req, res) {
         if (!req.auth) {
