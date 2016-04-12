@@ -38,9 +38,9 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data);
 	// });
 
-	// var user_id = '570bcae99a363aa513c03834'
+	// var user_id = 1
 	// EmployeeService.getEmployeeByID(user_id)
-	//.success(function(data){
+	// .success(function(data){
 	// 	console.log(data);
 	// }).error(function(data){
 	// 	console.log(data);
@@ -55,20 +55,35 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 
 	//To Do Exmaples below
 
-	TodoService.getTodoList()
-	.success(function(data){
-		console.log(data);
-	}).error(function(data){
-		console.log(data);
-	})
+	// TodoService.getTodoList()
+	// .success(function(data){
+	// 	console.log(data);
+	// }).error(function(data){
+	// 	console.log(data);
+	// })
 
-	var new_todo = {"id": 6,"status": "test","priority": "321","date": "8/28/2015", "description" : "RYLAN"};
-	TodoService.createNewTodoEntry(new_todo)
-	.success(function(data){
-		console.log(data);
-	}).error(function(data){
-		console.log(data);
-	});
+	// var new_todo = {"id": 7,"status": "test","priority": "321","date": "8/28/2015", "description" : "test"};
+	// TodoService.createNewTodoEntry(new_todo)
+	// .success(function(data){
+	// 	console.log(data);
+	// }).error(function(data){
+	// 	console.log(data);
+	// });
+
+	// var new_todo = {"id": 1,"status": "test","priority": "321","date": "8/28/2015", "description" : "not a test"};
+	// TodoService.updateTodoEntry(new_todo)
+	// .success(function(data){
+	// 	console.log(data);
+	// }).error(function(data){
+	// 	console.log(data);
+	// });
+
+	// TodoService.getSingleTodoEntry(1)
+	// .success(function(data){
+	// 	console.log(data)
+	// }).error(function(data){
+	// 	console.log(data)
+	// })
 
 
 }]);

@@ -1,22 +1,22 @@
-var exp = require('express');
-var express = require('express');
-var bodyParser = require('body-parser');
-var bcrypt = require('bcrypt');
-var jwt = require('jwt-simple');
-var jmsg = require('../status-responses');
-var config = require('../config/jwtconfig');
-var Employee = require('../models/employee');
-var app = exp();
+var exp = require('express')
+var express = require('express')
+var bodyParser = require('body-parser')
+var bcrypt = require('bcrypt')
+var jwt = require('jwt-simple')
+var jmsg = require('../status-responses')
+var config = require('../config/jwtconfig')
+var Employee = require('../models/employee')
+var app = exp()
 var don = require('../models/employees.json')
 
 
-app.use(bodyParser.json()); //populates req.body with (among other things) the value of the POST parameters. Here's the doc and examples: http://expressjs.com/api.html#req.body
+app.use(bodyParser.json()) //populates req.body with (among other things) the value of the POST parameters. Here's the doc and examples: http://expressjs.com/api.html#req.body
 
-app.use(require('../middleware/jwt-inspectos'));  //Set JWT middleware
-app.use(require('../middleware/jwt-expire'));     //Set JWT-Token Expiration middleware
-app.use(require('../middleware/cors'));           //Set CORS middleware
+app.use(require('../middleware/jwt-inspectos'))  //Set JWT middleware
+app.use(require('../middleware/jwt-expire'))     //Set JWT-Token Expiration middleware
+app.use(require('../middleware/cors'))           //Set CORS middleware
 
-var router = express.Router();
+var router = express.Router()
 
 
 //ERROR CODE BEING USED ARE 200, 401, 404, 422. Use cases below.
@@ -32,14 +32,14 @@ function seedDB(){
         employee.username = don[field].username
         employee.password = don[field].password
 
-        for (var i = 0; i < don[field].todo.length;i++){
-            employee.todo.push(don[field].todo[i]);
+        for (var i = 0 ; i < don[field].todo.length; i++){
+            employee.todo.push(don[field].todo[i])
         }
-        for (var i = 0; i < don[field].messages.length;i++){
-            employee.messages.push(don[field].messages[i]);
+        for (var i = 0 ; i < don[field].messages.length; i++){
+            employee.messages.push(don[field].messages[i])
         }
-        for (var i = 0; i < don[field].books.length;i++){
-            employee.books.push(don[field].books[i]);
+        for (var i = 0 ; i < don[field].books.length; i++){
+            employee.books.push(don[field].books[i])
         }
         employee.save()
     }
@@ -48,8 +48,8 @@ function seedDB(){
 
 //test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function (req, res) {
-    res.json(jmsg.welcome);
-});
+    res.json(jmsg.welcome)
+})
 
 //IMPORTANT AS FUCK INFO: I SET UP THE CLIENT SO WE CAN CONTROL USER ACCESS TO THE APP VIA THE SERVER, IF YOU SEND A 401 
 //YOU WILL REVOKE THE TOKEN IN THE CLIENT!!
@@ -67,50 +67,50 @@ router.route('/login')
             .select('password').select('username')
             .exec(function (err, user) {
                 if (err) {
-                    console.log(err); //log this bad boy, we will want to know!
-                    return next(err); //there is an error don't worry about it we got it it later!!
+                    console.log(err) //log this bad boy, we will want to know!
+                    return next(err) //there is an error don't worry about it we got it it later!!
                 }
                 if (!user) {
                     console.log('No User found')
-                    return res.status(401).send(jmsg.inv_login); //Send a 401 :O
+                    return res.status(401).send(jmsg.inv_login) //Send a 401 :O
                 }
                 //Here comes the good stuff, lets get hashy withit -_- ~~~ ~~ ~
 
-                user = JSON.stringify(user);
+                user = JSON.stringify(user)
                 user = JSON.parse(user)
 
         
                 bcrypt.compare(req.body.password,
                     user.password, function (err, valid) {  //Compare password hash
                         if (err) {
-                            console.log(err); 
-                            return next(err);
+                            console.log(err) 
+                            return next(err)
                         }
                         if (!valid) { //Check to see, are VALID!?! 
                             
                             //Well implementing Bcrypt was a waste of time, the passwords are not real hashes. So we will pretend this is a real app and we are doing this correctly, lets do basic insecure string matching.
                             if(req.body.password !== user.password){
-                                return res.status(401).send(jmsg.inv_login);
+                                return res.status(401).send(jmsg.inv_login)
                             }
                         }
                         //If we are valid, lets salt this bad boy up, hash it as a JSON Web Token, and send it on its marry way!! God I love JSON WEB TOEKENS, here is some resources
                         //https://scotch.io/tutorials/the-anatomy-of-a-json-web-token
                         var token = jwt.encode({
                             username: user.username, exp: new Date().getTime() + config.exp, id: user._id
-                        }, config.secret);
+                        }, config.secret)
                         //We will store this token in clients localStorage!!
-                        res.json({jwt: token, user: user.username, id:user._id});
-                });
-        });
+                        res.json({jwt: token, user: user.username, id:user._id})
+                })
+        })
 
-});
+})
 
 
 router.route('/test') //Generic test repost route
     .post(function(req, res, next){
-        console.log(req.body.data);
-        res.status(200).json(req.body.data);
-});
+        console.log(req.body.data)
+        res.status(200).json(req.body.data)
+})
 
 
 router.route('/employee')
@@ -120,16 +120,16 @@ router.route('/employee')
 * Decode JWT information to retrieve id to query for user info
 */
     .post(function (req, res, next) {
-        console.log(123);
+        console.log(123)
         if (!req.auth) {
-            return res.status(401).send();
+            return res.status(401).send()
         }
         Employee.findOne({_id: {$in: [req.auth.id]}}).exec(function (err, user) {
             if (err) {
-                return next(err);
+                return next(err)
             }
-            res.json(user);
-        });
+            res.json(user)
+        })
     })
 
 /**
@@ -138,14 +138,14 @@ router.route('/employee')
  */
     .get(function (req, res) {
         if (!req.auth) {
-            return res.status(404).send();
+            return res.status(404).send()
         }
         Employee.find(function (err, users) {
             if (err)
-                res.send(err);
-            res.json(users);
-        });
-    });
+                res.send(err)
+            res.json(users)
+        })
+    })
 
 
 
@@ -157,15 +157,15 @@ router.route('/employee/:user_id')
  */
     .get(function (req, res) {
         if (!req.auth) {
-            return res.status(404).send();
+            return res.status(404).send()
         }
-        Employee.findOne({id: req.params.user_id}}, function (err, user) {
+        Employee.findOne({id: req.params.user_id}, function (err, user) {
             if (err) {
-                return next(err);
+                return next(err)
             }
-            res.json(user);
-        });
-});
+            res.json(user)
+        })
+})
 
 router.route('/todo')
 /**
@@ -174,16 +174,16 @@ router.route('/todo')
  */
     .get(function (req, res) {
         if (!req.auth) {
-            return res.status(404).send();
+            return res.status(404).send()
         }
         Employee.findOne({'_id': req.auth.id}) //Check if user exists and get user.
             .select('employee.todo').exec(function (err, todo) {
-                res.json(todo);
+                res.json(todo)
         })
     })
     .post(function (req, res) {
         if (!req.auth) {
-            return res.status(404).send();
+            return res.status(404).send()
         }
         Employee.findOneAndUpdate(
             { "_id": req.auth.id },
@@ -191,13 +191,13 @@ router.route('/todo')
             { "new": true },
             function(err,doc) {
                 if(err){
-                    console.log( JSON.stringify(doc));
+                    console.log( JSON.stringify(doc))
                 }else{
                     res.json(jmsg.created)
                 }
                 
-        });
-});
+        })
+})
 
 
   
@@ -206,43 +206,78 @@ router.route('/todo')
 
 
 
-router.route('/todo/todo_id')
+router.route('/todo/:id')
 /**
  * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
  * Get entire todo list based on login user
  */
     .get(function (req, res) {
+
         if (!req.auth) {
-            return res.status(404).send();
+            return res.status(401).send()
         }
-        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
+        Employee.findOne({_id: req.auth.id}).select('todo').exec( function (err, user) {
             if (err) {
-                return next(err);
+                console.log(err)
             }
-            res.json(user);
+
+            for (var i = 0; user.todo.length; i++){
+                if(user.todo[i]){
+                    todoItem = JSON.stringify(user.todo[i])
+                    todoItem = JSON.parse(todoItem)
+                    if(parseInt(todoItem.id) === parseInt(req.params.id)){
+                        res.json(todoItem)
+                        break 
+                    }
+                }
+
+            }    
+            
         })
-    .update(function (req, res) {
+    })  .put(function (req, res) {
+            if (!req.auth) {
+                return res.status(401).send()
+            }
+            Employee.findOne({_id: req.auth.id}).select('todo').exec( function (err, user){
+
+                if (err){
+                    console.log(err)
+                }
+                        todo = JSON.stringify(user)
+                        todo = JSON.parse(todo)
+                for (var i = 0;i < todo.todo.length; i++){
+
+
+                        if(parseInt(todo.todo[i].id) === parseInt(req.params.id)){
+                            console.log(123)
+                            console.log(req.body.payload.status ? user.todo[i].status = req.body.payload.status : false)
+                            req.body.payload.priority ? user.todo[i].priority = req.body.payload.priority : false
+                            req.body.payload.date ? user.todo[i].date = req.body.payload.date : false
+                            req.body.payload.description ? user.todo[i].description = req.body.payload.description : false
+                            break
+                        }   
+                }
+
+
+                user.save(function (err) {
+                    if (err){
+                        console.log(err)
+                    }else{
+                        res.json(jmsg.update)
+                    }
+                })
+            })
+    })  .delete(function (req, res) {
         if (!req.auth) {
-            return res.status(404).send();
+            return res.status(404).send()
         }
         Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
             if (err) {
-                return next(err);
+                return next(err)
             }
-            res.json(user);
-        });
-})    .delete(function (req, res) {
-        if (!req.auth) {
-            return res.status(404).send();
-        }
-        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
-            if (err) {
-                return next(err);
-            }
-            res.json(user);
-        });
+            res.json(user)
+        })
 })
-});
 
 
 
@@ -255,6 +290,6 @@ router.route('/todo/todo_id')
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api', router);
+app.use('/api', router)
 
-module.exports = app;
+module.exports = app

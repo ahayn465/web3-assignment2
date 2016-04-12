@@ -19,7 +19,12 @@ angular.module('data.services', ['ngResource'])
                 },
                 createNewTodoEntry: function(payload){
                     return $http.post(SERVER_URL + '/api/todo', {"payload":payload});
-                    
+                },
+                getSingleTodoEntry: function(id){
+                    return $http.get(SERVER_URL + '/api/todo/' + id);
+                },
+                updateTodoEntry: function(payload){
+                    return $http.put(SERVER_URL + '/api/todo/' + payload.id, {"payload":payload});
                 }
             }
         

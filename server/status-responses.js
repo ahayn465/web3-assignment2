@@ -10,5 +10,6 @@ module.exports = {
     del:         {message: 'Successfully deleted'},
     toke_unauth: {message: 'Unauthorized'},
     sess_exp:    {message: 'Session Expired'},
-    invalid_json: {message: 'Invalid JSON'}
+    invalid_json: {message: 'Invalid JSON'},
+    ivalid_id: {message: 'Invalid ID'}
 }
