@@ -220,18 +220,24 @@ router.route('/todo/:id')
             if (err) {
                 console.log(err)
             }
-
-            for (var i = 0; user.todo.length; i++){
+            todoItem = {}
+            found = false
+            for (var i = 0; i < user.todo.length; i++){
                 if(user.todo[i]){
-                    todoItem = JSON.stringify(user.todo[i])
-                    todoItem = JSON.parse(todoItem)
-                    if(parseInt(todoItem.id) === parseInt(req.params.id)){
-                        res.json(todoItem)
-                        break 
+                    if(parseInt(user.todo[i].id) === parseInt(req.params.id)){
+                        todoItem = user.todo[i]
+                        found = true
+                        break
                     }
                 }
 
-            }    
+            }  
+            if (found){
+                return res.json(todoItem)       
+            }else{
+                return res.status(422).send()
+            }
+            
             
         })
     })  .put(function (req, res) {
@@ -243,14 +249,13 @@ router.route('/todo/:id')
                 if (err){
                     console.log(err)
                 }
-                        todo = JSON.stringify(user)
-                        todo = JSON.parse(todo)
-                for (var i = 0;i < todo.todo.length; i++){
+
+                for (var i = 0;i < user.todo.length; i++){
 
 
-                        if(parseInt(todo.todo[i].id) === parseInt(req.params.id)){
-                            console.log(123)
-                            console.log(req.body.payload.status ? user.todo[i].status = req.body.payload.status : false)
+                        if(parseInt(user.todo[i].id) === parseInt(req.params.id)){
+
+                            req.body.payload.status ? user.todo[i].status = req.body.payload.status : false
                             req.body.payload.priority ? user.todo[i].priority = req.body.payload.priority : false
                             req.body.payload.date ? user.todo[i].date = req.body.payload.date : false
                             req.body.payload.description ? user.todo[i].description = req.body.payload.description : false
@@ -268,15 +273,31 @@ router.route('/todo/:id')
                 })
             })
     })  .delete(function (req, res) {
-        if (!req.auth) {
-            return res.status(404).send()
-        }
-        Employee.findOne({_id: {$in: [req.params.user_id]}}, function (err, user) {
-            if (err) {
-                return next(err)
-            }
-            res.json(user)
-        })
+            Employee.findOne({_id: req.auth.id}).select('todo').exec( function (err, user){
+
+                if (err){
+                    console.log(err)
+                }
+
+                for (var i = 0;i < user.todo.length; i++){
+
+
+                        if(parseInt(user.todo[i].id) === parseInt(req.params.id)){
+                            var index = i
+                            if (index > -1) {
+                                console.log(123)
+                                user.todo.splice(index, 1);
+                            }
+                        }
+                }
+                user.save(function (err) {
+                    if (err){
+                        console.log(err)
+                    }else{
+                        res.json(jmsg.del)
+                    }
+                })
+            })
 })
 
 

@@ -25,6 +25,9 @@ angular.module('data.services', ['ngResource'])
                 },
                 updateTodoEntry: function(payload){
                     return $http.put(SERVER_URL + '/api/todo/' + payload.id, {"payload":payload});
+                },
+                deleteTodoEntry: function(id){
+                    return $http.delete(SERVER_URL + '/api/todo/' + id);
                 }
             }
         

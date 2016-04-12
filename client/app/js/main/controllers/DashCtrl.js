@@ -62,7 +62,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data);
 	// })
 
-	// var new_todo = {"id": 7,"status": "test","priority": "321","date": "8/28/2015", "description" : "test"};
+	// var new_todo = {"id": 6,"status": "test","priority": "321","date": "8/28/2015", "description" : "test"};
 	// TodoService.createNewTodoEntry(new_todo)
 	// .success(function(data){
 	// 	console.log(data);
@@ -70,7 +70,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data);
 	// });
 
-	// var new_todo = {"id": 1,"status": "test","priority": "321","date": "8/28/2015", "description" : "not a test"};
+	// var new_todo = {"id": 6,"status": "tesfdsafdsafsdaft","priority": "dsfadf321","date": "8/28/2fdsaf015", "description" : "notfdsfas a test"};
 	// TodoService.updateTodoEntry(new_todo)
 	// .success(function(data){
 	// 	console.log(data);
@@ -78,12 +78,23 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data);
 	// });
 
-	// TodoService.getSingleTodoEntry(1)
+	TodoService.getSingleTodoEntry(1)
+	.success(function(data){
+		console.log(data)
+	}).error(function(data){
+		console.log(data)
+	})
+
+	// TodoService.deleteTodoEntry(1)
 	// .success(function(data){
 	// 	console.log(data)
 	// }).error(function(data){
 	// 	console.log(data)
 	// })
+
+
+
+
 
 
 }]);
