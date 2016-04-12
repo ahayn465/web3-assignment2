@@ -16,6 +16,7 @@
 - app > js > main > services > DataServices.js (All the services should be working fines, feel free to take a peek at the auth and data services and questions if you would like to.)
 - app > js > main > templates dash.tpl.html/login.tpl.html
 
+## This is a single page application, you should never need to refresh the page. If you do we revoke the JWT. (Letting you know that this is normal behaviour)
 
-# Dont waste time getting stuck on stuff just ask me. 
+# Dont waste time getting stuck on stuff just ask Ry. 
 
