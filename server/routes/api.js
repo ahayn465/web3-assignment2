@@ -273,7 +273,6 @@ router.route('/todo/:id')
                         break
                     }
                 }
-
             }  
             if (found){
                 res.json(todoItem)       
@@ -350,6 +349,70 @@ router.route('/todo/:id')
 
 
 
+router.route('/messages')
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Get entire todo list based on login user
+ */
+    .get(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send()
+        }
+        Employee.findOne({'_id': req.auth.id}) //Check if user exists and get user.
+            .select('messages').exec(function (err, msg) {
+                res.json(msg)
+        })
+    })
+    .post(function (req, res) {
+        if (!req.auth) {
+            return res.status(404).send()
+        }
+
+        Employee.findOneAndUpdate(
+            { "_id": req.auth.id },
+            { "$push": { "messages": req.body.payload } },
+            { "new": true },
+            function(err,doc) {
+                if(err){
+                    console.log( JSON.stringify(doc))
+                }else{
+                    return res.json(jmsg.create)
+                } 
+        })
+})
+
+
+router.route('/messages/:id')
+/**
+ * Requires a valid JWT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ * Get entire todo list based on login user
+ */
+    .get(function (req, res) {
+        if (!req.auth) {
+            return res.status(401).send()
+        }
+        Employee.findOne({_id: req.auth.id}).select('messages').exec( function (err, user) {
+            if (err) {
+                console.log(err)
+            }
+            msgItem = {}
+            found = false
+            for (var i = 0; i < user.messages.length; i++){
+                if(user.messages[i]){
+                    if(parseInt(user.messages[i].id) === parseInt(req.params.id)){
+                        msgItem = user.messages[i]
+                        found = true
+                        break
+                    }
+                }
+            }  
+            if (found){
+                res.json(msgItem)       
+            }else{
+                return res.status(422).send()
+            }
+        })
+    }) 
 
 
 

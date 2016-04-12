@@ -46,8 +46,15 @@ angular.module('data.services', ['ngResource'])
             $http.defaults.headers.common['x-auth'] = localStorage.token;
             return {
                 getMessageList: function(){
-                    return $http.get(SERVER_URL + '/api/message');
+                    return $http.get(SERVER_URL + '/api/messages');
+                },
+                getSingleMessage: function(id){
+                    return $http.get(SERVER_URL + '/api/messages/' + id)
+                },
+                createNewMessage: function(payload){
+                    return $http.post(SERVER_URL + '/api/messages', {"payload":payload});
                 }
+
             }
  })    .factory('EmployeeService', function ($http) {
             $http.defaults.headers.common['x-auth'] = localStorage.token;

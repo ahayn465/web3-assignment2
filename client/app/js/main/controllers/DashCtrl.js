@@ -1,4 +1,4 @@
-app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService) {
+app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', 'MessageService', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService, MessageService) {
 
 	$scope.uname = UserService.getUser().user;
 
@@ -101,14 +101,56 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data)
 	// })
 
-	BookService.getSingleBook(571)
-	.success(function(data){
-		console.log(data)
-	}).error(function(data){
-		console.log(data)
-	})
+	// BookService.getSingleBook(571)
+	// .success(function(data){
+	// 	console.log(data)
+	// }).error(function(data){
+	// 	console.log(data)
+	// })
 
+	//Messages 
 
+	// MessageService.getMessageList()
+	// .success(function(data){
+	// 	console.log(data)
+	// }).error(function(data){
+	// 	console.log(data)
+	// })
+
+  //    var message = {
+  //       "id": 12,
+  //       "contact": {
+  //         "firstname": "Diana",
+  //         "lastname": "Carr",
+  //         "university": {
+  //           "id": 161253,
+  //           "name": "University of Maine",
+  //           "address": "168 College Avenue",
+  //           "city": "Orono",
+  //           "state": "Maine",
+  //           "zip": 4469,
+  //           "website": "www.umaine.edu/",
+  //           "latitude": 44.895966,
+  //           "longitude": -68.673839
+  //         }
+  //       },
+  //       "date": "7/11/2015",
+  //       "category": "Query",
+  //       "content": "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo."
+  //     }
+  //     MessageService.createNewMessage(message)
+  //     .success(function(data){
+		// console.log(data)
+	 //  }).error(function(data){
+		// console.log(data)
+	 //  })
+
+	// MessageService.getSingleMessage(12)
+	// .success(function(data){
+	// 	console.log(data)
+	// }).error(function(data){
+	// 	console.log(data)
+	// })
 
 
 
