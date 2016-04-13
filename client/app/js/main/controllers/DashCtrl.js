@@ -8,12 +8,12 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	//Lets say I call getEmployeeByID and I wanted to set its result to a variable named 'loggedUser' which we want to render out in the html file, it would look something like this!
 
         //VALID//
-	// var user_id = 'an ID'
+	// var user_id = '570d678761c32cb50eae5741'
 	// EmployeeService.getEmployeeByID(user_id)
 	//.success(function(data){
 	// 	$scope.loggedUser = data.username; //Using two way binding, this would update the html regaurless of being in the promise!! you render out the $scope variable in the mark up as follows. <div>{{loggedUser}}</div>
 	// }).error(function(data){
-	// 	console.log(data);
+	 //	console.log(data);
 	// });
 
 		//INVALID :(
@@ -31,12 +31,12 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	//Employee Examples below
 
 
-	// EmployeeService.getCurrentAuthenticatedEmployee()
-	// .success(function(data){
-	// 	console.log(data);
-	// }).error(function(data){
-	// 	console.log(data);
-	// });
+	 EmployeeService.getCurrentAuthenticatedEmployee()
+	.success(function(data){
+		console.log(data);
+ 	}).error(function(data){
+	 	console.log(data);
+	 });
 
 	// var user_id = 1
 	// EmployeeService.getEmployeeByID(user_id)
