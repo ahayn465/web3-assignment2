@@ -1,10 +1,31 @@
 
 <div class='main-wrapper'>
 	<h3>Hey {{uname}}, welcome to your Dashbaord!</h3>
-
+	
 	<div class="row">
 		<div class="small-12 large-4 columns dashboard-section">
-			<h2>Books</h2>
+		<h2>Books</h2>		
+		<table>
+		<tr>
+				<th>
+					<button ng-click="order('isbn10')">ISBN10</button>
+						<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span>
+				</th>
+     <th>
+         <button ng-click="order('title')">Title</button>
+         <span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+     </th>
+     <th>
+         <button ng-click="order('category')">Category</button>
+         <span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span>
+     </th>
+    </tr>
+    <tr ng-repeat="book in currentEmployee.books | orderBy:predicate:reverse">
+      <td>{{book.isbn10}}</td>
+      <td>{{book.title}}</td>
+      <td>{{book.category}}</td>
+    </tr>
+  </table>		
 		</div>
 		<div class="small-12 large-4 columns dashboard-section">
 			<h2>Messages</h2>

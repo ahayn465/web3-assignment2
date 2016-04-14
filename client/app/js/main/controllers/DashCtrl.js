@@ -33,6 +33,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 
 	 EmployeeService.getCurrentAuthenticatedEmployee()
 	.success(function(data){
+		$scope.currentEmployee = data;
 		console.log(data);
  	}).error(function(data){
 	 	console.log(data);
@@ -151,6 +152,11 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// }).error(function(data){
 	// 	console.log(data)
 	// })
+	
+	$scope.order = function(predicate) {
+    $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+    $scope.predicate = predicate;
+  };
 
 
 
