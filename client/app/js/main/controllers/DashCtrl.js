@@ -63,13 +63,28 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// 	console.log(data);
 	// })
 
-	// var new_todo = {"id": 6,"status": "test","priority": "321","date": "8/28/2015", "description" : "test"};
-	// TodoService.createNewTodoEntry(new_todo)
-	// .success(function(data){
-	// 	console.log(data);
-	// }).error(function(data){
-	// 	console.log(data);
-	// });
+$scope.createToDo = function (desc, priority, status) {
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	if(dd < 10) {
+		dd='0'+dd
+	} 
+	if(mm < 10) {
+		mm='0'+mm
+	}
+	today = mm+'/'+dd+'/'+yyyy;
+		
+	 var new_todo = {"id": 6,"status": status,"priority": priority,"date": today, "description" : desc};
+	 TodoService.createNewTodoEntry(new_todo)
+	 .success(function(data){
+	 	console.log(data);
+	 }).error(function(data){
+	 	console.log(data);
+	 });
+};
 
 	// var new_todo = {"id": 6,"status": "tesfdsafdsafsdaft","priority": "dsfadf321","date": "8/28/2fdsaf015", "description" : "notfdsfas a test"};
 	// TodoService.updateTodoEntry(new_todo)
