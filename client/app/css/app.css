@@ -28,13 +28,14 @@ body {
   clear:both;
 }
 
-/* Dashbaord */
+/* Dashboard */
 
 .dashboard-section{
   border: 1px solid #f0f0f0;
   padding: .25rem;
 }
 
+<<<<<<< HEAD
 .main-wrapper.ng-scope {
     padding-top: 2rem;
 }
@@ -86,5 +87,26 @@ span.success.label.Order {
 
 
 
+
+
+
+#book-table{
+	font-size: x-small;
+}
+
+#book-title{
+	font-weight: bold;
+}
+
+#book-header{
+	font-size: 120%;
+}
+
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
 
 
