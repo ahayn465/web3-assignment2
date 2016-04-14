@@ -1,6 +1,8 @@
-app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', 'MessageService', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService, MessageService) {
+app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', 'MessageService', 'uiGmapGoogleMapApi', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService, MessageService, uiGmapGoogleMapApi) {
 
 	$scope.uname = UserService.getUser().user;
+
+	$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
 	//Hey hey Amanda, I hope you have a good day today. I really wish I got to teach you this in person, nothing I love more, anyhow - Quicknote and reminder about these services, they return promises, and promises are singletons!!  This means they have some weird behavior you would not expect from JS !
 	//You will notice there is a success method appended to the result of these services, this is called a singleton.
@@ -175,6 +177,19 @@ $scope.createToDo = function (desc, priority, status) {
   };
 
 
+
+
+uiGmapGoogleMapApi.then(function(maps) {
+                
+   });
+
+$scope.messageClicked = function(lat, long, id){
+
+		console.log(lat, long, id);
+
+       $scope.map = { center: { latitude: lat, longitude: long }, zoom: 8 };
+
+}
 
   
 

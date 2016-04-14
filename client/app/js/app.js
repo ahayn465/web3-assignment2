@@ -1,4 +1,6 @@
-var app = angular.module('app', ['ui.router', 'auth.services', 'data.services']);
+var app = angular.module('app', ['ui.router', 'auth.services', 'data.services', 
+'uiGmapgoogle-maps']);
+
 
 app.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
@@ -25,5 +27,16 @@ app.config(['$httpProvider', function ($httpProvider) {
 	        }
 	});
 });
+
+app.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyBjP3nxt1Fc3PPXnbck6-kr3eNx3sEvn1w',
+        v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'weather,geometry,visualization'
+    });
+})
+
+
+
 
 
