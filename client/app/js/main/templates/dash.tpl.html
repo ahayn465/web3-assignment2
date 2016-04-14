@@ -1,8 +1,8 @@
 <div class='main-wrapper'>
 	<br><div class="row">
 		<div class="medium-7 large-3 columns">
-			<h3>Hey {{uname}}, </h3>
-			<p class="subheader">welcome to your Dashboard!</p>
+			<h3>Hello {{currentEmployee.firstname}}, </h3>
+			<p class="subheader">welcome to your dashboard!</p>
 		</div>
 		
 		<div class="medium-6 columns">
@@ -44,7 +44,7 @@
 	<hr>
 	</div>
 	<div class="row column">
-		<p class="lead">Trending Planetary Destinations</p>
+		<p class="lead">{{currentEmployee.firstname}}'s Lists</p>
 	</div>
 	<div class="row small-up-1 medium-up-2 large-up-3">
 		<div class="column">
@@ -52,18 +52,18 @@
 			{{currentEmployee.firstname}}'s Book List
 			
 			<table id="book-table">
-		<tr>
-				<th class="headerSortDown">						
-				<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span><br>
+				<tr>
+					<th class="headerSortDown">						
+					<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span><br>
 					<button ng-click="order('title')" id="book-header" class="button radius">Title</button>
-				</th>
-     <th>
-	     <span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span><br>
-         <button ng-click="order('category')" id="book-header" class="button radius">Category</button>
-     </th>
-     <th>
-	     <span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span><br>
-         <button ng-click="order('isbn10')" id="book-header" class="button radius">ISBN10</button>
+					</th>
+					<th>
+					<span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span><br>
+					<button ng-click="order('category')" id="book-header" class="button radius">Category</button>
+					</th>
+					<th>
+					<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span><br>
+					<button ng-click="order('isbn10')" id="book-header" class="button radius">ISBN10</button>
      </th>
     </tr>
     <tr ng-repeat="book in currentEmployee.books | orderBy: predicate:reverse">
@@ -94,29 +94,47 @@
 		</div>
 		<div class="column">
 			<div class="callout">
-				<p>Pegasi B</p>
-				<p><img src="http://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
-				<p class="lead">Copernican Revolution caused an uproar</p>
-				<p class="subheader">Find Earth-like planets life outside the Solar System</p>
+			{{currentEmployee.firstname}}'s To Do List
+			<table>
+				<tr>
+					<th>						
+						Date
+					</th>
+					<th>
+						Description
+					</th>
+					<th>
+						Status
+					</th>
+					<th>
+						Priority
+					</th>
+					<th>
+						Actions
+					</th>
+				</tr>
+    <tr ng-repeat="item in currentEmployee.todo | orderBy: '-date'">
+      <td>{{item.date}}</td>
+      <td>{{item.description}}</td>
+      <td>
+		<span ng-if="item.status == 'completed'" class="success badge" id="badge-text">{{item.status}}</span>
+		<span ng-if="item.status == 'pending'" class="warning badge" id="badge-text">{{item.status}}</span>
+		<span ng-if="item.status == 'active'" class="badge" id="badge-text">{{item.status}}</span>
+	  </td>
+	  <td>
+		<span ng-if="item.priority == 'high'" class="alert badge" id="badge-text">{{item.priority}}</span>
+		<span ng-if="item.priority == 'medium'" class="warning badge" id="badge-text">{{item.priority}}</span>
+		<span ng-if="item.priority == 'low'" class="badge" id="badge-text">{{item.priority}}</span>
+	  </td>
+	  <td>
+		<button class="button"><i class="fa fa-lg fa-edit fa-fw"></i></button>
+		<button class="button" ng-click="deleteToDo(item.id)"><i class="fa fa-lg fa-trash fa-fw"></i></button>
+	  </td>
+    </tr>
+  </table>
+  
 			</div>
 		</div>
-		<div class="column">
-			<div class="callout">
-				<p>Pegasi B</p>
-				<p><img src="http://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
-				<p class="lead">Copernican Revolution caused an uproar</p>
-				<p class="subheader">Find Earth-like planets life outside the Solar System</p>
-			</div>
-		</div>
-		<div class="column">
-			<div class="callout">
-				<p>Pegasi B</p>
-				<p><img src="http://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
-				<p class="lead">Copernican Revolution caused an uproar</p>
-				<p class="subheader">Find Earth-like planets life outside the Solar System</p>
-			</div>
-		</div>
-		{{currentEmployee.todo}}
 	</div>
 
 

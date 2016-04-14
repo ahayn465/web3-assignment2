@@ -54,3 +54,7 @@ body {
   content: '\25bc';
 }
 
+#badge-text{
+	font-size: 80%;
+}
+

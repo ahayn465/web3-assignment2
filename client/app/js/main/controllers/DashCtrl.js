@@ -64,20 +64,29 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// })
 
 $scope.createToDo = function (desc, priority, status) {
+	var i = 0;
 	
+	//Set up ID of created to do item
+	angular.forEach($scope.currentEmployee.todo, function(){
+		i++;
+	});
+	
+	//Set up correct Date format
 	var today = new Date();
 	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
+	var mm = today.getMonth() + 1; //January is 0!
 	var yyyy = today.getFullYear();
 	if(dd < 10) {
-		dd='0'+dd
+		dd= '0' + dd
 	} 
 	if(mm < 10) {
-		mm='0'+mm
+		mm= '0' + mm
 	}
 	today = mm+'/'+dd+'/'+yyyy;
-		
-	 var new_todo = {"id": 6,"status": status,"priority": priority,"date": today, "description" : desc};
+	
+	//Pass data
+	var new_todo = {"id": i,"status": status,"priority": priority,"date": today, "description" : desc};
+	console.log(new_todo);
 	 TodoService.createNewTodoEntry(new_todo)
 	 .success(function(data){
 	 	console.log(data);
@@ -101,6 +110,17 @@ $scope.createToDo = function (desc, priority, status) {
 	// 	console.log(data)
 	// })
 
+$scope.deleteToDo = function (id) {
+	if (confirm('Are you sure you want to delete this item?')) {
+			TodoService.deleteTodoEntry(id)
+	 .success(function(data){
+	 	console.log(data);
+	 }).error(function(data){
+	 	console.log(data);
+	 })		
+	}	
+};
+	
 	// TodoService.deleteTodoEntry(1)
 	// .success(function(data){
 	// 	console.log(data)
@@ -173,8 +193,10 @@ $scope.createToDo = function (desc, priority, status) {
     $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
     $scope.predicate = predicate;
   };
-
-
+  
+	$scope.doLogout = function() {
+		
+	};
 
 }]);
 
