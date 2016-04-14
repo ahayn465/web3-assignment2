@@ -34,3 +34,57 @@ body {
   border: 1px solid #f0f0f0;
   padding: .25rem;
 }
+
+.main-wrapper.ng-scope {
+    padding-top: 2rem;
+}
+
+
+
+
+
+/* Messages */
+
+.callout{
+  overflow: auto;
+}
+
+div.message-content {
+    background: #F1F1F1;
+    padding: .5rem;
+
+    border: 1px solid #CCCCCC;
+}
+
+.message-meta.row {
+    padding-bottom: 0.25rem;
+}
+
+.message-content.large-12.columns {
+    margin-bottom: 1rem;
+}
+
+.large-6.columns.message-badge span {
+    float: right;
+}
+
+span.success.label.Query {
+    background: purple;
+}
+
+span.success.label.Help {
+    background: blue;
+}
+
+span.success.label.Response {
+    background: red;
+}
+
+span.success.label.Order {
+    background: orange;
+}
+
+
+
+
+

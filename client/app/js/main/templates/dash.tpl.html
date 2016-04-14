@@ -1,11 +1,10 @@
 <div class='main-wrapper'>
 
-	<h3>Hey {{uname}}, welcome to your Dashbaord!</h3>
  
 	<div class="row">
 		<div class="medium-7 large-6 columns">
 			<h3>Hey {{uname}}, </h3>
-			<p class="subheader">welcome to your Dashbaord!<</p>
+			<p class="subheader">welcome to your Dashbaord!</p>
 		</div>
 		<div class="show-for-large large-3 columns">
 			<img src="http://placehold.it/400x370&text=PSR1257 + 12 C" alt="picture of space">
@@ -33,65 +32,65 @@
 	<div class="row column">
 	<hr>
 	</div>
-	<div class="row column">
-		<p class="lead">Trending Planetary Destinations</p>
-	</div>
 	<div class="row small-up-1 medium-up-2 large-up-3">
 		<div class="column">
 			<div class="callout">
-			<table>
-		<tr>
-				<th>
-					<button ng-click="order('isbn10')">ISBN10</button>
-						<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span>
-				</th>
-     <th>
-         <button ng-click="order('title')">Title</button>
-         <span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
-     </th>
-     <th>
-         <button ng-click="order('category')">Category</button>
-         <span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span>
-     </th>
-    </tr>
-    <tr ng-repeat="book in currentEmployee.books | orderBy:predicate:reverse">
-      <td>{{book.isbn10}}</td>
-      <td>{{book.title}}</td>
-      <td>{{book.category}}</td>
-    </tr>
-  </table>	
+				<table>
+					<tr>
+						<th>
+							<button ng-click="order('isbn10')">ISBN10</button>
+								<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span>
+						</th>
+			     		<th>
+			        		 <button ng-click="order('title')">Title</button>
+			         		<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+			     		</th>
+			     		<th>
+			        		 <button ng-click="order('category')">Category</button>
+			         		<span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span>
+			     		</th>
+			    	</tr>
+			    	<tr ng-repeat="book in currentEmployee.books | orderBy:predicate:reverse">
+		    		    <td>{{book.isbn10}}</td>
+			      		<td>{{book.title}}</td>
+			      		<td>{{book.category}}</td>
+			   		</tr>
+			  </table>	
 			</div>
 		</div>
+
+
 		<div class="column">
 			<div class="callout">
-				<p>Pegasi B</p>
-				<p><img src="http://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
-				<p class="lead">Copernican Revolution caused an uproar</p>
-				<p class="subheader">Find Earth-like planets life outside the Solar System</p>
-			</div>
-		</div>
-		<div class="column">
-			<div class="callout">
-				<p>Pegasi B</p>
-				<p><img src="http://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
-				<p class="lead">Copernican Revolution caused an uproar</p>
-				<p class="subheader">Find Earth-like planets life outside the Solar System</p>
-			</div>
-		</div>
-		<div class="column">
-			<div class="callout">
-				<p>Pegasi B</p>
-				<p><img src="http://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
-				<p class="lead">Copernican Revolution caused an uproar</p>
-				<p class="subheader">Find Earth-like planets life outside the Solar System</p>
-			</div>
-		</div>
-		<div class="column">
-			<div class="callout">
-				<p>Pegasi B</p>
-				<p><img src="http://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
-				<p class="lead">Copernican Revolution caused an uproar</p>
-				<p class="subheader">Find Earth-like planets life outside the Solar System</p>
+				<div ng-repeat="message in currentEmployee.messages"> 
+					<div class='message-meta row'>
+						<div class='large-6 columns'>{{message.date}}</div>
+
+						<div class='large-6 columns message-badge'>
+							<span class="success label {{message.category}}">{{message.category}}</span>
+						</div>
+					</div>
+				
+					<div class='message-content large-12 columns'>
+						<p class=''>{{message.content}}</p>
+							<div class='message-sender'>
+							<p>- {{message.contact.firstname}} {{message.contact.lastname}}</p>
+							<p><a data-reveal-id={{message.contact.university.id}}>{{message.contact.university.name}}</a></p>
+	
+						</div>
+					</div>	
+
+					<div id={{message.contact.university.id}} class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+				  		<h2 id="modalTitle">{{message.contact.university.name}}</h2>
+					  	<p class="uni-address">{{message.contact.university.address}}</p> 
+					  	<p class='uni-city'>{{message.contact.university.city}}, {{message.contact.university.state}} {{message.contact.university.zip}}</p>
+					  	<p class='uni-website'><a  target=blank href=http://{{message.contact.university.website}}>{{message.contact.university.website}}</a></p>
+					  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+					</div>
+					
+				
+					
+				 </div>		
 			</div>
 		</div>
 		<div class="column">
@@ -104,6 +103,9 @@
 		</div>
 	</div>
 
+
+
+{{currentEmployee.messages}}
 
 	
 
