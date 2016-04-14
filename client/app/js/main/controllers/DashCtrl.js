@@ -33,6 +33,7 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 
 	 EmployeeService.getCurrentAuthenticatedEmployee()
 	.success(function(data){
+		$scope.currentEmployee = data;
 		console.log(data);
  	}).error(function(data){
 	 	console.log(data);
@@ -110,12 +111,13 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 
 	//Messages 
 
-	// MessageService.getMessageList()
-	// .success(function(data){
-	// 	console.log(data)
-	// }).error(function(data){
-	// 	console.log(data)
-	// })
+	MessageService.getMessageList()
+	.success(function(data){
+		console.log(data)
+		$scope.messages = data;
+	}).error(function(data){
+		console.log(data)
+	})
 
   //    var message = {
   //       "id": 12,
