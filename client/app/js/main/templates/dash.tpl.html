@@ -39,27 +39,31 @@
 	<div class="row small-up-1 medium-up-2 large-up-3">
 		<div class="column">
 			<div class="callout">
-			<table>
+			{{currentEmployee.firstname}}'s Book List
+			
+			<table id="book-table">
 		<tr>
-				<th>
-					<button ng-click="order('isbn10')">ISBN10</button>
-						<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span>
+				<th class="headerSortDown">						
+				<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span><br>
+					<button ng-click="order('title')" id="book-header" class="button radius">Title</button>
 				</th>
      <th>
-         <button ng-click="order('title')">Title</button>
-         <span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+	     <span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span><br>
+         <button ng-click="order('category')" id="book-header" class="button radius">Category</button>
      </th>
      <th>
-         <button ng-click="order('category')">Category</button>
-         <span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span>
+	     <span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span><br>
+         <button ng-click="order('isbn10')" id="book-header" class="button radius">ISBN10</button>
      </th>
     </tr>
-    <tr ng-repeat="book in currentEmployee.books | orderBy:predicate:reverse">
-      <td>{{book.isbn10}}</td>
-      <td>{{book.title}}</td>
+    <tr ng-repeat="book in currentEmployee.books | orderBy: predicate:reverse">
+      <td id="book-title">{{book.title}}</td>
       <td>{{book.category}}</td>
+      <td>{{book.isbn10}}</td>
     </tr>
   </table>	
+  
+  
 			</div>
 		</div>
 		<div class="column">
