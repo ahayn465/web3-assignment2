@@ -1,6 +1,7 @@
 app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', 'MessageService', 'uiGmapGoogleMapApi', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService, MessageService, uiGmapGoogleMapApi) {
 
 	$scope.uname = UserService.getUser().user;
+	$scope.currentEmployee = "";
 
 	$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
@@ -68,12 +69,15 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 $scope.createToDo = function (desc, priority, status) {
 	var i = 0;
 	
-	//Set up ID of created to do item
-	angular.forEach($scope.currentEmployee.todo, function(){
+	//Set up iterative ID for new to do item (+1 of highest id found)
+	angular.forEach($scope.currentEmployee.todo, function(value, key){
+		if (value.id > i) {
+			i = value.id;
+		}
 		i++;
 	});
 	
-	//Set up correct Date format
+	//Set up correct date format
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth() + 1; //January is 0!
@@ -86,12 +90,12 @@ $scope.createToDo = function (desc, priority, status) {
 	}
 	today = mm+'/'+dd+'/'+yyyy;
 	
-	//Pass data
+	//Create to do item with provided data
 	var new_todo = {"id": i,"status": status,"priority": priority,"date": today, "description" : desc};
-	console.log(new_todo);
 	 TodoService.createNewTodoEntry(new_todo)
 	 .success(function(data){
-	 	console.log(data);
+		 //Push data onto list
+		$scope.currentEmployee.todo.push(data.todo[data.todo.length - 1]);
 	 }).error(function(data){
 	 	console.log(data);
 	 });
@@ -112,11 +116,18 @@ $scope.createToDo = function (desc, priority, status) {
 	// 	console.log(data)
 	// })
 
+//Delete to do item based on id of selected item
 $scope.deleteToDo = function (id) {
 	if (confirm('Are you sure you want to delete this item?')) {
 			TodoService.deleteTodoEntry(id)
 	 .success(function(data){
-	 	console.log(data);
+		var index = 0;
+		angular.forEach($scope.currentEmployee.todo, function(value, key){
+			if (value.id == data) {		
+				$scope.currentEmployee.todo.splice(index, 1);
+			}
+		index++;
+		});	
 	 }).error(function(data){
 	 	console.log(data);
 	 })		
@@ -150,7 +161,6 @@ $scope.deleteToDo = function (id) {
 
 	MessageService.getMessageList()
 	.success(function(data){
-		console.log(data)
 		$scope.messages = data;
 	}).error(function(data){
 		console.log(data)
@@ -191,13 +201,13 @@ $scope.deleteToDo = function (id) {
 	// 	console.log(data)
 	// })
 	
-	$scope.order = function(predicate) {
-    $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
-    $scope.predicate = predicate;
+//Dynamic sorting of booktable based on field (predicate) and asc or desc (reverse)
+$scope.order = function(predicate) {
+	$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+	$scope.predicate = predicate;
   };
   
-	$scope.doLogout = function() {
-		
+$scope.doLogout = function() {
 	};
 
 
