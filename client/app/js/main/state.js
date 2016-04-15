@@ -24,6 +24,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       templateUrl: 'js/main/templates/msg.tpl.html',
       controller: 'MsgCtrl',
       access: {requiredLogin: true}
+    })   
+    .state('app.about', {
+      url: '/about',
+      templateUrl: 'js/main/templates/about.tpl.html',
+      controller: 'AboutCtrl',
+      access: {requiredLogin: false}
     })    
     .state('app.todo', {
       url: '/todo',
