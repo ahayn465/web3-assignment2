@@ -325,7 +325,7 @@ router.route('/todo/:id')
                     if (err){
                         console.log(err)
                     }else{
-                        res.json(jmsg.update)
+                        res.json(user.todo[i])
                     }
                 })
             })
