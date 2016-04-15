@@ -179,18 +179,25 @@ $scope.createToDo = function (desc, priority, status) {
 
 
 
-uiGmapGoogleMapApi.then(function(maps) {
-                
-   });
+	uiGmapGoogleMapApi.then(function(maps) {
+	                
+		$scope.messageClicked = function(id){ 
+			//the id of the message university clicked so that we have all the 
+			//info for that message and can make a modal
 
-$scope.messageClicked = function(lat, long, id){
+			MessageService.getSingleMessage(id)
+			.success(function(data){
+				console.log(data.contact.university)
 
-		console.log(lat, long, id);
+				$scope.map = { center: { latitude: data.contact.university.lattitude, longitude: data.contact.university.longitude }, zoom: 8 };
 
-       $scope.map = { center: { latitude: lat, longitude: long }, zoom: 8 };
+	 		}).error(function(data){
+				console.log(data)
+	 		})
 
-}
-
+	       
+		}
+	});
   
 
 }]);

@@ -1,5 +1,5 @@
 var app = angular.module('app', ['ui.router', 'auth.services', 'data.services', 
-'uiGmapgoogle-maps']);
+'uiGmapgoogle-maps', 'angularModalService']);
 
 
 app.config(['$httpProvider', function ($httpProvider) {

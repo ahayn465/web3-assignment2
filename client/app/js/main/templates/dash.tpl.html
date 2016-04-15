@@ -87,16 +87,20 @@
 						<p>{{message.content}}</p>
 							<div class='message-sender'>
 							<p>- {{message.contact.firstname}} {{message.contact.lastname}}</p>
-							<p><a data-reveal-id="{{message.contact.university.id}}" target="_blank" ng-click="messageClicked(message.contact.university.latitude,message.contact.university.longitude, message.contact.university.id)">{{message.contact.university.name}}</a></p>
+							<p><a data-reveal-id="{{message.contact.university.id}}" target="_blank" ng-click="messageClicked(message.id)">{{message.contact.university.name}}</a></p>
 						</div>
 					</div>	
 				 </div>		
 			</div>
 		</div>
+
+		<div class="column">
+			<div class="callout">
+				
+			</div>
+		</div>
 	</div>
 
-
-{{currentEmployee.messages}}
 
 	
 
