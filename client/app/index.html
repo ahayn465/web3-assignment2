@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>Textbook Publisher Dashboard</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link type="text/css" rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
@@ -25,6 +25,9 @@
 <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
 
 
+   <!-- Compressed CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.css">
+
 </head>
 <body>
 
@@ -32,23 +35,6 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-
-<div class="top-bar" id="realEstateMenu">
-  <div class="top-bar-left">
-    <ul class="menu" data-responsive-menu="accordion">
-      <li class="menu-text">Interplanetary</li>
-      <li><a href="#">One</a></li>
-      <li><a href="#">Two</a></li>
-      <li><a href="#">Three</a></li>
-    </ul>
-    </div>
-    <div class="top-bar-right">
-      <ul class="menu">
-        <li><a href="#">My Account</a></li>
-        <li><a class="button">Login</a></li>
-      </ul>
-  </div>
-</div>
 
   <div class="main" ui-view="main"></div>
 
@@ -78,6 +64,18 @@
   <script src="js/main/state.js"></script>
   <script src="js/main/controllers/DashCtrl.js"></script>
   <script src="js/main/controllers/LoginCtrl.js"></script>
+
+
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+  <!-- FOUNDATION Compressed JavaScript -->
+  <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/foundation/6.2.1/js/foundation.reveal.js"></script>
+
+ <script>
+  $(document).foundation();  
+ </script>
 
 
 </body>
