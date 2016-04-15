@@ -41,9 +41,6 @@ body {
 }
 
 
-
-
-
 /* Messages */
 
 .callout{
@@ -110,4 +107,7 @@ span.success.label.Order {
   content: '\25bc';
 }
 
+#badge-text{
+	font-size: 80%;
+}
 

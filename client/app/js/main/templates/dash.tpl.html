@@ -2,8 +2,12 @@
 
 	<div class="row">
 		<div class="medium-7 large-3 columns">
-			<h3>Hey {{uname}}, </h3>
-			<p class="subheader">welcome to your Dashboard!</p>
+			<h3>Hello {{currentEmployee.firstname}}, </h3>
+			<p class="subheader">welcome to your dashboard!</p>
+			<p>You have:</p>
+			<p><strong>{{currentEmployee.books.length}}</strong> books in your book list. </p>
+			<p><strong>{{currentEmployee.messages.length}}</strong> messages. </p>
+			<p><strong>{{currentEmployee.todo.length}}</strong> items in your to do list. </p>
 		</div>
 		
 		<div class="medium-6 columns">
@@ -13,12 +17,12 @@
 						<div class="small-12 columns">
 						<h4>Add to Your To Do List</h4>					
 							<label>Item Description
-							<textarea placeholder="What do you need to do?"  ng-model="toDoData.desc"></textarea>
+							<textarea placeholder="What do you need to do?"  ng-model="toDoData.desc" required></textarea>
 							</label>
 						</div>
 						<div class="small-6 columns">
 							  <label>Priority
-								<select ng-model="toDoData.priority">
+								<select ng-model="toDoData.priority" required>
 									<option value="low">Low</option>
 									<option value="medium">Medium</option>
 									<option value="high">High</option>
@@ -28,8 +32,8 @@
 						</div>
 						<div class="small-6 columns">
 							  <label>Status
-								<select ng-model="toDoData.status">
-									<option value="active">Active</option>
+								<select ng-model="toDoData.status" required>
+									<option value="active" selected>Active</option>
 									<option value="pending">Pending</option>
 									<option value="completed">Completed</option>
 									</select>
@@ -44,31 +48,66 @@
 	<div class="row column">
 	<hr>
 	</div>
+	<div class="row column">
+		<p class="lead">{{currentEmployee.firstname}}'s Lists</p>
+	</div>
 	<div class="row small-up-1 medium-up-2 large-up-3">
 		<div class="column">
 			<div class="callout">
-			{{currentEmployee.firstname}}'s Book List
-				<table id="book-table">
-					<tr>
-						<th class="headerSortDown">						
-							<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span><br>
-							<button ng-click="order('title')" id="book-header" class="button radius">Title</button>
-						</th>
-	     				<th>
-		    				<span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span><br>
-	        				 <button ng-click="order('category')" id="book-header" class="button radius">Category</button>
-	     				</th>
-	     				<th>
-		     				<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span><br>
-	         				<button ng-click="order('isbn10')" id="book-header" class="button radius">ISBN10</button>
-	     				</th>
-	   				 </tr>
-	   				 <tr ng-repeat="book in currentEmployee.books | orderBy: predicate:reverse">
-	      				<td id="book-title">{{book.title}}</td>
-	      				<td>{{book.category}}</td>
-	      				<td>{{book.isbn10}}</td>
-					</tr>
-	  			</table>	
+			{{currentEmployee.firstname}}'s Book List			
+			<table id="book-table">
+				<tr>
+					<th class="headerSortDown">						
+						<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span><br>
+						<button ng-click="order('title')" id="book-header" class="button radius">Title</button>
+					</th>
+					<th>
+						<span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span><br>
+						<button ng-click="order('category')" id="book-header" class="button radius">Category</button>
+					</th>
+					<th>
+						<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span><br>
+						<button ng-click="order('isbn10')" id="book-header" class="button radius">ISBN10</button>
+					</th>
+				</tr>
+				<tr ng-repeat="book in currentEmployee.books | orderBy: predicate:reverse">
+					<td id="book-title">{{book.title}}</td>
+					<td>{{book.category}}</td>
+					<td>{{book.isbn10}}</td>
+				</tr>
+			</table>	  
+			</div>
+		</div>
+		<div class="column">
+			<div class="callout">
+			{{currentEmployee.firstname}}'s To Do List
+			<table>
+				<tr>
+					<th>Date</th>
+					<th>Description</th>
+					<th>Status</th>
+					<th>Priority</th>
+					<th>Actions</th>
+				</tr>
+				<tr ng-repeat="item in currentEmployee.todo | orderBy: '-date'">
+					<td>{{item.date}}</td>
+					<td>{{item.description}}</td>
+					<td>
+						<span ng-if="item.status == 'completed'" class="success badge" id="badge-text">{{item.status}}</span>
+						<span ng-if="item.status == 'pending'" class="warning badge" id="badge-text">{{item.status}}</span>
+						<span ng-if="item.status == 'active'" class="badge" id="badge-text">{{item.status}}</span>
+					</td>
+					<td>
+						<span ng-if="item.priority == 'high'" class="alert badge" id="badge-text">{{item.priority}}</span>
+						<span ng-if="item.priority == 'medium'" class="warning badge" id="badge-text">{{item.priority}}</span>
+						<span ng-if="item.priority == 'low'" class="badge" id="badge-text">{{item.priority}}</span>
+					</td>
+					<td>
+						<button class="button"><i class="fa fa-lg fa-edit fa-fw"></i></button>
+						<button class="button" ng-click="deleteToDo(item.id)"><i class="fa fa-lg fa-trash fa-fw"></i></button>
+					</td>
+				</tr>
+			</table>	
 			</div>
 		</div>
 		
@@ -90,16 +129,20 @@
 							<p><a data-reveal-id="{{message.contact.university.id}}" target="_blank" ng-click="messageClicked(message.id)">{{message.contact.university.name}}</a></p>
 						</div>
 					</div>	
-				 </div>		
-			</div>
-		</div>
 
-		<div class="column">
-			<div class="callout">
-				
+
+					<div id={{message.contact.university.id}} class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+				  		<h2 id="modalTitle">{{message.contact.university.name}}</h2>
+					  	<p class="uni-address">{{message.contact.university.address}}</p> 
+					  	<p class='uni-city'>{{message.contact.university.city}}, {{message.contact.university.state}} {{message.contact.university.zip}}</p>
+					  	<p class='uni-website'><a  target=blank href=http://{{message.contact.university.website}}>{{message.contact.university.website}}</a></p>
+					  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+					</div>		
+				 </div>	
 			</div>
 		</div>
 	</div>
+</div>
 
 
 	

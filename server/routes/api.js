@@ -200,7 +200,7 @@ router.route('/todo')
                 if(err){
                     console.log( JSON.stringify(doc))
                 }else{
-                    res.json(jmsg.created)
+                    res.json(doc)
             } 
         })
 })
@@ -344,6 +344,7 @@ router.route('/todo/:id')
 
 
                         if(parseInt(user.todo[i].id) === parseInt(req.params.id)){
+							var deleteId = user.todo[i].id;
                             var index = i
                             if (index > -1) {
                                 found = true
@@ -356,7 +357,8 @@ router.route('/todo/:id')
                         console.log(err)
                     }else{
                         if (found){
-                            res.json(jmsg.del)
+							
+                         res.json(deleteId)
                         }else{
                             res.status(422).send()
                         }
