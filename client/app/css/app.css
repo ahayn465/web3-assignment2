@@ -1,5 +1,12 @@
 /* app css stylesheet */
 
+#login{
+  background: white;
+  padding: 1rem;
+  border: 1px solid rgba(10, 10, 10, 0.25);
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -117,7 +124,7 @@ span.success.label.Order {
 
 /* About */
 body {
-  background: #333; }
+  background: #ebebeb; }
 
 .header.panel {
   margin: 3rem auto;
@@ -138,7 +145,7 @@ body {
     height: 2.4rem;
     border: 2px solid #444;
     position: relative;
-    top: -2.5rem;
+    top: -1.5rem;
     margin: auto; }
     .header.panel .sign h1 {
       text-transform: uppercase;
@@ -150,9 +157,14 @@ body {
       line-height: 2rem; }
 
 div#about-wrap {
-    background: #333;
+    background: #ebebeb;
 }
 
+.main.ng-scope {
+    background: #ebebeb;
+}
 
-
+body{
+  background: #ebebeb !important;
+}
 

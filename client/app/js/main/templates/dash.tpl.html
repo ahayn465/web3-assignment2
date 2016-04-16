@@ -1,7 +1,7 @@
 <div class='main-wrapper'>
 
 	<div class="row">
-		<div class="medium-7 large-3 columns dash-welcome">
+		<div class="callout medium-7 large-3 columns dash-welcome">
 			<h3>Hello {{currentEmployee.firstname}}! </h3>
 			<p>You currently have:</p>
 			<p><strong>{{currentEmployee.books.length}}</strong> books in your book list. </p>
@@ -10,7 +10,7 @@
 		</div>
 		
 		<div class="medium-6 columns">
-			<div class="callout secondary">
+			<div class="callout">
 				<form ng-submit="createToDo(toDoData.desc, toDoData.priority, toDoData.status)">
 					<div class="row">
 						<div class="small-12 columns">
@@ -46,9 +46,6 @@
 	</div>
 	<div class="row">
 	<hr>
-	</div>
-	<div class="row">
-		<p class="lead">{{currentEmployee.firstname}}'s Lists</p>
 	</div>
 	<div class="row">
 		<div class="large-12 columns">
