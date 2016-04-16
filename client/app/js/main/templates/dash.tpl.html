@@ -10,7 +10,9 @@
 		</div>
 		
 		<div class="medium-6 columns">
-			<div class="callout">
+
+			<div class="callout secondary" ng-hide="updateSelected">
+
 				<form ng-submit="createToDo(toDoData.desc, toDoData.priority, toDoData.status)">
 					<div class="row">
 						<div class="small-12 columns">
@@ -41,8 +43,38 @@
 					</div>
 				</form>
 			</div>
-		</div>
-		
+			<div class="callout secondary" ng-hide="!updateSelected">
+				<form ng-submit="updateToDo(updateDesc, updatePriority, updateStatus)">
+					<div class="row">
+						<div class="small-12 columns">
+						<h4>Update Your To Do Item</h4>					
+							<label>Item Description
+							<textarea  ng-model="updateDesc" required></textarea>
+							</label>
+						</div>
+						<div class="small-6 columns">
+							  <label>Priority
+								<select ng-model="updatePriority" value="updatePriority" required>
+									<option value="low">Low</option>
+									<option value="medium">Medium</option>
+									<option value="high">High</option>
+									</select>
+							</label>
+							<button type="submit" class="button">Update Item!</button>
+						</div>
+						<div class="small-6 columns">
+							  <label>Status
+								<select ng-model="updateStatus" value="updateStatus" required>
+									<option value="active" selected>Active</option>
+									<option value="pending">Pending</option>
+									<option value="completed">Completed</option>
+									</select>
+							</label>
+						</div>
+					</div>
+				</form>
+			</div>
+	</div>		
 	</div>
 	<div class="row">
 	<hr>
@@ -99,7 +131,7 @@
 						<span ng-if="item.priority == 'low'" class="badge" id="badge-text">{{item.priority}}</span>
 					</td>
 					<td>
-						<button class="button"><i class="fa fa-lg fa-edit fa-fw"></i></button>
+						<button class="button" ng-click="showUpdateForm(item.id)"><i class="fa fa-lg fa-edit fa-fw"></i></button>
 						<button class="button" ng-click="deleteToDo(item.id)"><i class="fa fa-lg fa-trash fa-fw"></i></button>
 					</td>
 				</tr>
@@ -129,6 +161,7 @@
 			</div>
 		</div>
 	</div>
+<button class="button" ng-click="doLogout()">Logout</button>	
 </div>
 
 

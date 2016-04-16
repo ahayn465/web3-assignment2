@@ -1,11 +1,16 @@
 app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', 'MessageService', 'uiGmapGoogleMapApi', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService, MessageService, uiGmapGoogleMapApi) {
 
+	//Globals
 	$scope.uname = UserService.getUser().user;
 	$scope.currentEmployee = "";
-
+	$scope.updateId = "";
+	$scope.updateDesc = "";
+	$scope.updatePriorty = "";
+	$scope.updateStatus = "";
+	$scope.updateSelected = false;
 	$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
-	//Hey hey Amanda, I hope you have a good day today. I really wish I got to teach you this in person, nothing I love more, anyhow - Quicknote and reminder about these services, they return promises, and promises are singletons!!  This means they have some weird behavior you would not expect from JS !
+ 	//Quicknote and reminder about these services, they return promises, and promises are singletons!!  This means they have some weird behavior you would not expect from JS !
 	//You will notice there is a success method appended to the result of these services, this is called a singleton.
 	//The results and contents of what is in 'data', will ONLY be avalibale within the callback it self! For example:
 	//Lets say I call getEmployeeByID and I wanted to set its result to a variable named 'loggedUser' which we want to render out in the html file, it would look something like this!
@@ -101,13 +106,50 @@ $scope.createToDo = function (desc, priority, status) {
 	 });
 };
 
-	// var new_todo = {"id": 6,"status": "tesfdsafdsafsdaft","priority": "dsfadf321","date": "8/28/2fdsaf015", "description" : "notfdsfas a test"};
-	// TodoService.updateTodoEntry(new_todo)
-	// .success(function(data){
-	// 	console.log(data);
-	// }).error(function(data){
-	// 	console.log(data);
-	// });
+$scope.showUpdateForm = function(id) {
+	$scope.updateSelected = true;
+	$scope.updateId = id;
+	angular.forEach($scope.currentEmployee.todo, function(value, key){
+		if (value.id == id) {
+			$scope.updateDesc = value.description;
+			$scope.updatePriority = value.priority;
+			$scope.updateStatus = value.status;
+		}
+	});
+};	
+
+$scope.updateToDo = function (desc, priority, status) {
+	
+	//Set up correct date format
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; //January is 0!
+	var yyyy = today.getFullYear();
+	if(dd < 10) {
+		dd= '0' + dd
+	} 
+	if(mm < 10) {
+		mm= '0' + mm
+	}
+	today = mm+'/'+dd+'/'+yyyy;
+	
+	 var upd_todo = {"id": $scope.updateId,"status": status,"priority": priority,"date": today, "description" : desc};
+	 TodoService.updateTodoEntry(upd_todo)
+	 .success(function(data){
+		var index = 0;
+		angular.forEach($scope.currentEmployee.todo, function(value, key){
+			if (value.id == data.id) {		
+				$scope.currentEmployee.todo.splice(index, 1);
+			}
+			index++;
+		});	
+		$scope.currentEmployee.todo.push(data);
+		$scope.updateSelected = false;
+		$scope.updateId = 0;
+	 }).error(function(data){
+	 	console.log(data);
+	 });
+};
 
 	// TodoService.getSingleTodoEntry(1)
 	// .success(function(data){
@@ -115,7 +157,7 @@ $scope.createToDo = function (desc, priority, status) {
 	// }).error(function(data){
 	// 	console.log(data)
 	// })
-
+	
 //Delete to do item based on id of selected item
 $scope.deleteToDo = function (id) {
 	if (confirm('Are you sure you want to delete this item?')) {
@@ -208,28 +250,25 @@ $scope.order = function(predicate) {
   };
   
 $scope.doLogout = function() {
+
 	};
 
 
-	uiGmapGoogleMapApi.then(function(maps) {
-	                
-		$scope.messageClicked = function(id){ 
-			//the id of the message university clicked so that we have all the 
-			//info for that message and can make a modal
 
-			MessageService.getSingleMessage(id)
-			.success(function(data){
-				console.log(data.contact.university)
-
-				$scope.map = { center: { latitude: data.contact.university.lattitude, longitude: data.contact.university.longitude }, zoom: 8 };
-
-	 		}).error(function(data){
-				console.log(data)
-	 		})
-
-	       
-		}
-	});
+uiGmapGoogleMapApi.then(function(maps) {
+                
+	$scope.messageClicked = function(id){ 
+		//the id of the message university clicked so that we have all the 
+		//info for that message and can make a modal
+		MessageService.getSingleMessage(id)
+		.success(function(data){
+			console.log(data.contact.university)
+			$scope.map = { center: { latitude: data.contact.university.lattitude, longitude: data.contact.university.longitude }, zoom: 8 };
+ 		}).error(function(data){
+			console.log(data)
+ 		})  
+	}
+});
   
 
 }]);
