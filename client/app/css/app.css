@@ -51,6 +51,16 @@ body {
     margin-bottom: 0;
 }
 
+#list-title{
+	font-weight: bold;
+	font-size: 120%;
+}
+
+#logout-btn{
+	padding-left: 4em;
+	padding-right: 4.4em;
+}
+
 
 /* Messages */
 

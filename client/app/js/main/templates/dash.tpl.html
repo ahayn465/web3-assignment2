@@ -7,9 +7,9 @@
 			<p><strong>{{currentEmployee.books.length}}</strong> books in your book list. </p>
 			<p><strong>{{currentEmployee.messages.length}}</strong> messages. </p>
 			<p><strong>{{currentEmployee.todo.length}}</strong> items in your to do list. </p>
-			<div>
-				<button ui-sref="app.about" class="button radius">About this Dashboard</button>
-				<button class="button radius" ng-click="doLogout()">Logout</button>	
+			<div><br>
+				<button ui-sref="app.about" class="button large">About this Dashboard</button>
+				<button id="logout-btn" class="button large" ng-click="doLogout()">Logout</button>	
 			</div>
 		</div>
 		<div class="medium-6 columns">
@@ -19,24 +19,23 @@
 				<form ng-submit="createToDo(toDoData.desc, toDoData.priority, toDoData.status)">
 					<div class="row">
 						<div class="small-12 columns">
-						<h4>Add to Your To Do List</h4>					
+						<div><h4>Add to Your To Do List</h4><button type="submit" class="button">Add Item!</button></div>	
 							<label>Item Description
 							<textarea placeholder="What do you need to do?"  ng-model="toDoData.desc" required></textarea>
 							</label>
 						</div>
 						<div class="small-6 columns">
 							  <label>Priority
-								<select ng-model="toDoData.priority" required>
+								<select ng-init="toDoData.priority = 'low'" ng-model="toDoData.priority" required>
 									<option value="low">Low</option>
 									<option value="medium">Medium</option>
 									<option value="high">High</option>
 									</select>
 							</label>
-							<button type="submit" class="button">Add Item!</button>
 						</div>
 						<div class="small-6 columns">
 							  <label>Status
-								<select ng-model="toDoData.status" required>
+								<select ng-init="toDoData.status = 'pending'" ng-model="toDoData.status" required>
 									<option value="active" selected>Active</option>
 									<option value="pending">Pending</option>
 									<option value="completed">Completed</option>
@@ -50,7 +49,7 @@
 				<form ng-submit="updateToDo(updateDesc, updatePriority, updateStatus)">
 					<div class="row">
 						<div class="small-12 columns">
-						<h4>Update Your To Do Item</h4>					
+						<div><h4>Update Your To Do Item</h4><button type="submit" class="button">Update Item!</button></div>				
 							<label>Item Description
 							<textarea  ng-model="updateDesc" required></textarea>
 							</label>
@@ -63,7 +62,6 @@
 									<option value="high">High</option>
 									</select>
 							</label>
-							<button type="submit" class="button">Update Item!</button>
 						</div>
 						<div class="small-6 columns">
 							  <label>Status
@@ -85,7 +83,7 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<div class="callout">
-			{{currentEmployee.firstname}}'s To Do List
+			<p id="list-title">{{currentEmployee.firstname}}'s To Do List</p>
 				<table id="todo-table">
 				<tr>
 					<th>Date</th>
@@ -117,7 +115,7 @@
 		</div>
 		<div class="large-12 columns">
 			<div class="callout">
-			{{currentEmployee.firstname}}'s Book List			
+			<p id="list-title">{{currentEmployee.firstname}}'s Book List</p>	
 			<table id="book-table">
 				<tr>
 					<th class="headerSortDown">						
@@ -143,6 +141,7 @@
 		</div>		
 		<div class="large-12 columns">
 			<div class="callout">
+			<p id="list-title">{{currentEmployee.firstname}}'s Messages</p>
 				<div ng-repeat="message in currentEmployee.messages" id="msg-rpt"> 
 					<div class='message-meta row'>
 						<div class='large-6 columns'>{{message.date}}</div>
