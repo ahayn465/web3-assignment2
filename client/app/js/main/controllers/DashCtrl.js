@@ -1,4 +1,4 @@
-app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', 'MessageService', 'uiGmapGoogleMapApi', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService, MessageService, uiGmapGoogleMapApi) {
+app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'EmployeeService', 'TodoService', 'BookService', 'MessageService', 'uiGmapGoogleMapApi', 'ModalService', 'uiGmapGoogleMapApi', function($scope, AuthenticationService, UserService, EmployeeService, TodoService, BookService, MessageService, uiGmapGoogleMapApi, ModalService, uiGmapGoogleMapApi) {
 
 	//Globals
 	$scope.uname = UserService.getUser().user;
@@ -36,7 +36,35 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 		//The above code won't work at all, current result is still set to null, however result within the singleton, is set to data. I hope this helps, this is really one of the only weird things. <3
 
 
-	//Employee Examples below
+
+	$scope.messageClicked = function(id) {
+		uiGmapGoogleMapApi.then(function(maps) {
+                
+		MessageService.getSingleMessage(id)
+		.success(function(data){
+			console.log(data.contact.university, 123)
+			
+		ModalService.showModal({
+            templateUrl: 'js/main/templates/modal.tpl.html',
+            controller: "DashCtrl"
+        }).then(function(modal) {
+            $scope.map = { center: { latitude: data.latitude, longitude: data.longitude }, zoom: 8 };
+            modal.element.modal();
+
+            modal.close.then(function(result) {
+                $scope.message = "You said " + result;
+            });
+        });
+ 		}).error(function(data){
+			console.log(data)
+ 		})  
+	
+});
+
+    };
+  $scope.close = function(result) {
+ 	close(result, 500); // close, but give 500ms for bootstrap to animate
+ };
 
 
 	 EmployeeService.getCurrentAuthenticatedEmployee()
@@ -251,24 +279,13 @@ $scope.order = function(predicate) {
   
 $scope.doLogout = function() {
 
-	};
+};
 
 
 
-uiGmapGoogleMapApi.then(function(maps) {
-                
-	$scope.messageClicked = function(id){ 
-		//the id of the message university clicked so that we have all the 
-		//info for that message and can make a modal
-		MessageService.getSingleMessage(id)
-		.success(function(data){
-			console.log(data.contact.university)
-			$scope.map = { center: { latitude: data.contact.university.lattitude, longitude: data.contact.university.longitude }, zoom: 8 };
- 		}).error(function(data){
-			console.log(data)
- 		})  
-	}
-});
+
+
+
   
 
 }]);
