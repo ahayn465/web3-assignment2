@@ -7,8 +7,11 @@
 			<p><strong>{{currentEmployee.books.length}}</strong> books in your book list. </p>
 			<p><strong>{{currentEmployee.messages.length}}</strong> messages. </p>
 			<p><strong>{{currentEmployee.todo.length}}</strong> items in your to do list. </p>
+			<div>
+				<button ui-sref="app.about" class="button radius">About this Dashboard</button>
+				<button class="button radius" ng-click="doLogout()">Logout</button>	
+			</div>
 		</div>
-		<button ng-click=""></button>
 		<div class="medium-6 columns">
 
 			<div class="callout secondary" ng-hide="updateSelected">
@@ -160,7 +163,6 @@
 			</div>
 		</div>
 	</div>
-<button class="button" ng-click="doLogout()">Logout</button>	
 </div>
 
 
