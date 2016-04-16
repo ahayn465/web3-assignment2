@@ -47,11 +47,13 @@ Compressed JavaScript
   var win;
   var width;
   var height
+
 $(document).ready(function(){
- width  = $window.width() - 1; 
-  height = $window.width() - 1;
-  win = $window;
-$window.widthresizeTo(width, height);
+  console.log(location.path)
+  width  = window.width - 1; 
+  height = window.width - 1;
+  win = window;
+
 })
 
 
