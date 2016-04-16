@@ -43,6 +43,19 @@ Compressed JavaScript
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script type="text/javascript">
+  var win;
+  var width;
+  var height
+$(document).ready(function(){
+ width  = $window.width() - 1; 
+  height = $window.width() - 1;
+  win = $window;
+$window.widthresizeTo(width, height);
+})
+
+
+</script>
   <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>  
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
