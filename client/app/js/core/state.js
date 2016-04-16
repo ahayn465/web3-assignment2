@@ -14,14 +14,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
           controller: 'NavbarCtrl'
         },
         'main': {
-          templateUrl: 'js/core/templates/main.tpl.html'
+          templateUrl: 'js/core/templates/main.tpl.html',
+          cache:false
         }
       }
     })
     .state('404', {
       url: '/404',
       templateUrl: 'js/core/templates/404.tpl.html',
-      controller: 'AppCtrl'
+      controller: 'AppCtrl',
+      cache:false
     });
 
 }]);
