@@ -1,5 +1,13 @@
 <div class='main-wrapper'>
+<script type="text/javascript">
+$(document).ready(function(){
+	var width = $window.width() - 1; 
+var height = $window.width() - 1;
+$widnow.widthresizeTo(width, height);
+})
 
+
+</script>
 	<div class="row">
 		<div class="callout medium-7 large-3 columns dash-welcome">
 			<h3>Hello {{currentEmployee.firstname}}! </h3>

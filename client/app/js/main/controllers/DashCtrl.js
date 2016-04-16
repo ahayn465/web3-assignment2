@@ -35,6 +35,17 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
 	// $scope.loggedUser = result
 		//The above code won't work at all, current result is still set to null, however result within the singleton, is set to data. I hope this helps, this is really one of the only weird things. <3
 
+function tellAngular() {
+    console.log("tellAngular call");
+    var domElt = document.getElementsByClassName('modal-dialog');
+    scope = angular.element(domElt).scope();
+    scope.$apply(function() {
+    	console.log(domElt)
+        scope.width = window.innerWidth - 1;
+    });
+}
+
+
 
 
 	$scope.messageClicked = function(id) {
@@ -42,14 +53,18 @@ app.controller('DashCtrl', ['$scope', 'AuthenticationService', 'UserService', 'E
                 
 		MessageService.getSingleMessage(id)
 		.success(function(data){
-			console.log(data.contact.university, 123)
 			
 		ModalService.showModal({
             templateUrl: 'js/main/templates/modal.tpl.html',
             controller: "DashCtrl"
         }).then(function(modal) {
             $scope.map = { center: { latitude: data.latitude, longitude: data.longitude }, zoom: 8 };
+
+
             modal.element.modal();
+
+            setInterval(function(){ $window.resizeBy(1, 1);   }, 2000);
+            
 
             modal.close.then(function(result) {
                 $scope.message = "You said " + result;
