@@ -82,34 +82,8 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<div class="callout">
-			{{currentEmployee.firstname}}'s Book List			
-			<table id="book-table">
-				<tr>
-					<th class="headerSortDown">						
-						<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span><br>
-						<button ng-click="order('title')" id="book-header" class="button radius">Title</button>
-					</th>
-					<th>
-						<span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span><br>
-						<button ng-click="order('category')" id="book-header" class="button radius">Category</button>
-					</th>
-					<th>
-						<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span><br>
-						<button ng-click="order('isbn10')" id="book-header" class="button radius">ISBN10</button>
-					</th>
-				</tr>
-				<tr ng-repeat="book in currentEmployee.books | orderBy: predicate:reverse">
-					<td id="book-title">{{book.title}}</td>
-					<td>{{book.category}}</td>
-					<td>{{book.isbn10}}</td>
-				</tr>
-			</table>	  
-			</div>
-		</div>
-		<div class="large-12 columns">
-			<div class="callout">
 			{{currentEmployee.firstname}}'s To Do List
-			<table>
+				<table id="todo-table">
 				<tr>
 					<th>Date</th>
 					<th>Description</th>
@@ -135,13 +109,38 @@
 						<button class="button" ng-click="deleteToDo(item.id)"><i class="fa fa-lg fa-trash fa-fw"></i></button>
 					</td>
 				</tr>
-			</table>	
+				</table>	  
 			</div>
 		</div>
-		
 		<div class="large-12 columns">
 			<div class="callout">
-				<div ng-repeat="message in currentEmployee.messages"> 
+			{{currentEmployee.firstname}}'s Book List			
+			<table id="book-table">
+				<tr>
+					<th class="headerSortDown">						
+						<button ng-click="order('title')" id="book-header-title" class="button radius">Title</button>
+						<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+					</th>
+					<th>
+						<button ng-click="order('category')" id="book-header" class="button radius">Category</button>
+						<span class="sortorder" ng-show="predicate === 'category'" ng-class="{reverse:reverse}"></span>
+					</th>
+					<th>
+						<button ng-click="order('isbn10')" id="book-header" class="button radius">ISBN10</button>
+						<span class="sortorder" ng-show="predicate === 'isbn10'" ng-class="{reverse:reverse}"></span>
+					</th>
+				</tr>
+				<tr ng-repeat="book in currentEmployee.books | orderBy: predicate:reverse">
+					<td id="book-title">{{book.title}}</td>
+					<td>{{book.category}}</td>
+					<td>{{book.isbn10}}</td>
+				</tr>
+			</table>	
+			</div>
+		</div>		
+		<div class="large-12 columns">
+			<div class="callout">
+				<div ng-repeat="message in currentEmployee.messages" id="msg-rpt"> 
 					<div class='message-meta row'>
 						<div class='large-6 columns'>{{message.date}}</div>
 
@@ -153,15 +152,14 @@
 					<div class='message-content large-12 columns'>
 						<p>{{message.content}}</p>
 							<div class='message-sender'>
-							<p>- {{message.contact.firstname}} {{message.contact.lastname}}</p>
-							<p><a data-reveal-id="{{message.contact.university.id}}" target="_blank" ng-click="messageClicked(message.id)">{{message.contact.university.name}}</a></p>
+							<p>- {{message.contact.firstname}} {{message.contact.lastname}},
+							<a data-reveal-id="{{message.contact.university.id}}" target="_blank" ng-click="messageClicked(message.id)">{{message.contact.university.name}}</a></p>
 						</div>
 					</div>
 				 </div>	
 			</div>
 		</div>
 	</div>
-
 <button class="button" ng-click="doLogout()">Logout</button>	
 </div>
 

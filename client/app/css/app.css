@@ -58,6 +58,10 @@ body {
   overflow: auto;
 }
 
+#msg-rpt{
+	font-size: 90%;
+}
+
 div.message-content {
     background: #F1F1F1;
     padding: .5rem;
@@ -100,7 +104,7 @@ span.success.label.Order {
 
 
 #book-table{
-	font-size: x-small;
+	font-size: 80%;
 }
 
 #book-title{
@@ -111,6 +115,12 @@ span.success.label.Order {
 	font-size: 120%;
 }
 
+#book-header-title{
+	font-size: 120%;
+	padding-left: 17em;
+	padding-right:17em;
+}
+
 .sortorder:after {
   content: '\25b2';
 }
@@ -119,6 +129,12 @@ span.success.label.Order {
 }
 
 #badge-text{
+	font-size: 80%;
+}
+
+/* ToDo */
+
+#todo-table{
 	font-size: 80%;
 }
 

@@ -293,15 +293,9 @@ $scope.order = function(predicate) {
   };
   
 $scope.doLogout = function() {
-
+	//Prevents ability to back out to previous page (though would revoke jwt anyways)
+    window.location.replace('/client/app/');
 };
-
-
-
-
-
-
-  
 
 }]);
 
